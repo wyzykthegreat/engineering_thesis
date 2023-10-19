@@ -46,8 +46,9 @@
 #ifndef DSP28x_PROJECT_H
 #define DSP28x_PROJECT_H
 
-#include <tiHeaders/common/DSP2833x_Examples.h>   // DSP2833x Examples Include File
 #include <tiHeaders/header/DSP2833x_Device.h>     // DSP2833x Headerfile Include File
+#include <tiHeaders/common/DSP2833x_Examples.h>   // DSP2833x Examples Include File
+
 
 #endif  // end of DSP28x_PROJECT_H definition
 
