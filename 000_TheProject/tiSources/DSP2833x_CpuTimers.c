@@ -138,6 +138,10 @@ InitCpuTimers(void)
     //
     CpuTimer1.InterruptCount = 0;
     CpuTimer2.InterruptCount = 0;
+
+    //150MHz == SYSCLKOUT frequency, 100000us == 100ms period;
+    ConfigCpuTimer(&CpuTimer2, 150, 100000);
+    CpuTimer2Regs.TCR.bit.TSS = 0;
 }
 
 //

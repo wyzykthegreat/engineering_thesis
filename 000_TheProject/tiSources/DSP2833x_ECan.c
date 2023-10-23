@@ -493,3 +493,9 @@ InitECanbGpio(void)
 // End of File
 //
 
+
+//ALL BELOW IS MY CODE
+
+void cfgECanaMB(void){
+
+}

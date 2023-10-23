@@ -57,7 +57,7 @@
 //
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
-
+extern unsigned int tmr2IsrCtr;
 //
 // INT13_ISR - Connected to INT13 of CPU (use MINT13 mask):
 // Note CPU-Timer1 is reserved for TI use, however XINT13
@@ -89,11 +89,36 @@ INT14_ISR(void)     // CPU-Timer2
     //
 
     //
+    //Increment value of number of interrupt service routines since last reset
+    //
+    CpuTimer2Regs.TCR.bit.TRB = 1;
+    tmr2IsrCtr++;
+
+
+    if(4 < tmr2IsrCtr){
+
+    //
+    //if there are more than 4 it means 500ms have gone reset counter and do 500ms task
+    //
+        tmr2IsrCtr = 0;
+    //LED flashing for test purposes
+        GpioDataRegs.GPATOGGLE.bit.GPIO9 = 1;
+    }
+    //
+    //Do 100ms task
+
+
+    //
+    //Send CAN frames
+    //
+
+
+    //
     // Next two lines for debug only to halt the processor here
     // Remove after inserting ISR Code
     //
-    asm ("      ESTOP0");
-    for(;;);
+//    asm ("      ESTOP0");
+//    for(;;);
 }
 
 //
