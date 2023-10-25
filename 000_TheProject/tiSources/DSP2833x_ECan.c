@@ -498,4 +498,39 @@ InitECanbGpio(void)
 
 void cfgECanaMB(void){
 
+    ECanaMboxes.MBOX0.MSGCTRL.all = 0x00000000;
+/*
+    ECanaMboxes.MBOX1.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX2.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX3.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX4.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX5.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX6.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX7.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX8.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX9.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX10.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX11.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX12.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX13.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX14.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX15.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX16.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX17.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX18.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX19.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX20.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX21.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX22.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX23.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX24.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX25.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX26.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX27.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX28.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX29.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX30.MSGCTRL.all = 0x00000000;
+    ECanaMboxes.MBOX31.MSGCTRL.all = 0x00000000;
+*/
+
 }
