@@ -55,111 +55,21 @@ void
 InitEPwm(void)
 {
     //
-    // Initialize ePWM1/2/3/4/5/6
+    // Initialize ePWM1/2/3 which control phases U/V/W
     //
-
-    //Initialize ePWM1/2/3 which control phases U/V/W
-    EALLOW;
-
-    //TBPRD
-    EPwm1Regs.TBPRD = 7500; //10000Hz ==fPWM == 2*TBPRD*TBCLK <=Assuming that CTRMODE will be configuret as UPDOWN(2)
-
-    //TBPHS
-    EPwm1Regs.TBPHS.half.TBPHS = 0;
-
-    //TBCTR
-    EPwm1Regs.TBCTR = 1; //<what should be the initial value?
-
-    //TBCTL
-        //CTRMODE will be set to 2 after every ePWM is configured
-    EPwm1Regs.TBCTL.bit.FREE_SOFT = 2; //ePWM will be in free run mode
-    EPwm1Regs.TBCTL.bit.CLKDIV = 0;    //150MHz == SYSCLKOUT == TBCLK
-    EPwm1Regs.TBCTL.bit.HSPCLKDIV = 0; //150MHz == SYSCLKOUT == TBCLK
-    EPwm1Regs.TBCTL.bit.SYNCOSEL = 1;  //Synchronization pulse when zero == CTR
-    EPwm1Regs.TBCTL.bit.PHSEN = 0;
-
-    //TBSTS
-        //this register exists, just so you know
-
-    //CMPA
-    EPwm1Regs.CMPA.half.CMPA = 7500/2;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
-
-    //CMPB
-    EPwm1Regs.CMPB = 7500; //this register is planned to be used as ADC starter some time in the future
-
-    //CMPCTL
-        //Shadow workings of the PWM module
-
-    //CMPAHR
-        //not used HighResolution part of counter-compare A value
-
-    //AQCTLA
-    EPwm1Regs.AQCTLA.bit.CAU = 2;//ASSUMPTION: EPWMxA high sets vout = vdc;
-    EPwm1Regs.AQCTLA.bit.CAD = 1;//ASSUMPTION: EPWMxA low  sets vout = 0;
-    //AQCTLB
-        //Probably not needed, to make sure deadband has to be worked out
-    //AQSFRC
-        //this register exists, just so you know
-    //AQCSFRC
-        //!!!continuous software force on outputs, very useful!!!
-    //DBCTL
-    EPwm1Regs.DBCTL.bit.IN_MODE  = 0;
-    EPwm1Regs.DBCTL.bit.POLSEL   = 2;
-    EPwm1Regs.DBCTL.bit.OUT_MODE = 3;
-    //DBRED
-    EPwm1Regs.DBRED = 600; //<=12us,  ASSUMPTION: SYSCLKOKUT == TBCLK
-
-    //DBFED
-    EPwm1Regs.DBFED = 600; //<=12us,  ASSUMPTION: SYSCLKOKUT == TBCLK
-
-    //PCCTL
-        //chopper register, not used for now
-
-    //TZSEL
-    EPwm1Regs.TZSEL.bit.OSHT1 = 1;
-
-    //TZCTL
-    EPwm1Regs.TZCTL.bit.TZA = 2; //force high ASSUMPTION EPWMxA connects vout to vdc
-    EPwm1Regs.TZCTL.bit.TZB = 1; //force low  ASSUMPTION EPWMxB connects vout to 0
-
-    //TZEINT
-    EPwm1Regs.TZEINT.bit.OST = 1;
-
-    //TZFLG
-        //this register exists, just so you know
-
-    //TZCLR
-        //this register exists, just so you know
-
-    //TZFRC
-        //this register exists, just so you know
-
-    //ETSEL
-    EPwm1Regs.ETSEL.bit.SOCAEN = 1;
-    EPwm1Regs.ETSEL.bit.SOCASEL = 2; //will happen if TBcounter equals to PRD
-    EPwm1Regs.ETSEL.bit.INTEN = 1;
-    EPwm1Regs.ETSEL.bit.INTSEL = 2; // will happen when SOCA happens
-
-    //ETPS
-    EPwm1Regs.ETPS.bit.SOCAPRD = 1;
-    EPwm1Regs.ETPS.bit.INTPRD  = 0; //ENABLE AFTER IMPLEMENTING isr for pwm functions!!!
-
-    //ETFLG
-        //this register exists, just so you know
-
-    //ETCLR
-        //this register exists, just so you know
-
-    //ETFRC
-        //this register exists, just so you know
-
+    InitEPwm1();
+    InitEPwm2();
+    InitEPwm3();
     //REMINDER: CTRMODE will be configured last after every ePWM is configured
-
+    //InitEPwm1Gpio(); <=currently pins configuret in initgpio
 
     //
     //Configure CTRMODE fields to start ePWMs
     //
+    //EPwm3Regs.TBCTL.bit.CTRMODE = 2;
+    //EPwm2Regs.TBCTL.bit.CTRMODE = 2;
     //EPwm1Regs.TBCTL.bit.CTRMODE = 2;
+
     EDIS;
 
 }
@@ -503,6 +413,303 @@ InitTzGpio(void)
     GpioCtrlRegs.GPAMUX2.bit.GPIO17 = 3;  // Configure GPIO17 as TZ6               
     //GpioCtrlRegs.GPAMUX2.bit.GPIO29 = 3;  // Configure GPIO29 as TZ6  
 
+    EDIS;
+}
+
+void InitEPwm1(void){
+    EALLOW;
+
+    //TBPRD
+    EPwm1Regs.TBPRD = 7500; //10000Hz ==fPWM == 2*TBPRD*TBCLK <=Assuming that CTRMODE will be configuret as UPDOWN(2)
+
+    //TBPHS
+    EPwm1Regs.TBPHS.half.TBPHS = 0;
+
+    //TBCTR
+    EPwm1Regs.TBCTR = 0; //<what should be the initial value?
+
+    //TBCTL
+        //CTRMODE will be set to 2 after every ePWM is configured
+    EPwm1Regs.TBCTL.bit.FREE_SOFT = 2; //ePWM will be in free run mode
+    EPwm1Regs.TBCTL.bit.CLKDIV = 0;    //150MHz == SYSCLKOUT == TBCLK
+    EPwm1Regs.TBCTL.bit.HSPCLKDIV = 0; //150MHz == SYSCLKOUT == TBCLK
+    EPwm1Regs.TBCTL.bit.SYNCOSEL = 1;  //Synchronization pulse when zero == CTR
+    EPwm1Regs.TBCTL.bit.PHSEN = 0;
+
+    //TBSTS
+        //this register exists, just so you know
+
+    //CMPA
+    EPwm1Regs.CMPA.half.CMPA = 7500/2;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
+
+    //CMPB
+    EPwm1Regs.CMPB = 7500; //this register is planned to be used as ADC starter some time in the future
+
+    //CMPCTL
+        //Shadow workings of the PWM module
+
+    //CMPAHR
+        //not used HighResolution part of counter-compare A value
+
+    //AQCTLA
+    EPwm1Regs.AQCTLA.bit.CAU = 2;//ASSUMPTION: EPWMxA high sets vout = vdc;
+    EPwm1Regs.AQCTLA.bit.CAD = 1;//ASSUMPTION: EPWMxA low  sets vout = 0;
+    //AQCTLB
+        //Probably not needed, to make sure deadband has to be worked out
+    //AQSFRC
+        //this register exists, just so you know
+    //AQCSFRC
+        //!!!continuous software force on outputs, very useful!!!
+    //DBCTL
+    EPwm1Regs.DBCTL.bit.IN_MODE  = 0;
+    EPwm1Regs.DBCTL.bit.POLSEL   = 2;
+    EPwm1Regs.DBCTL.bit.OUT_MODE = 3;
+    //DBRED
+    EPwm1Regs.DBRED = 600; //<=12us,  ASSUMPTION: SYSCLKOKUT == TBCLK
+
+    //DBFED
+    EPwm1Regs.DBFED = 600; //<=12us,  ASSUMPTION: SYSCLKOKUT == TBCLK
+
+    //PCCTL
+        //chopper register, not used for now
+
+    //TZSEL
+    EPwm1Regs.TZSEL.bit.OSHT1 = 1;
+
+    //TZCTL
+    EPwm1Regs.TZCTL.bit.TZA = 2; //force high ASSUMPTION EPWMxA connects vout to vdc
+    EPwm1Regs.TZCTL.bit.TZB = 1; //force low  ASSUMPTION EPWMxB connects vout to 0
+
+    //TZEINT
+    EPwm1Regs.TZEINT.bit.OST = 1;
+
+    //TZFLG
+        //this register exists, just so you know
+
+    //TZCLR
+        //this register exists, just so you know
+
+    //TZFRC
+        //this register exists, just so you know
+
+    //ETSEL
+    EPwm1Regs.ETSEL.bit.SOCAEN = 1;
+    EPwm1Regs.ETSEL.bit.SOCASEL = 2; //will happen if TBcounter equals to PRD
+    EPwm1Regs.ETSEL.bit.INTEN = 1;
+    EPwm1Regs.ETSEL.bit.INTSEL = 2; // will happen when SOCA happens
+
+    //ETPS
+    EPwm1Regs.ETPS.bit.SOCAPRD = 1;
+    EPwm1Regs.ETPS.bit.INTPRD  = 0; //ENABLE AFTER IMPLEMENTING isr for pwm functions!!!
+
+    //ETFLG
+        //this register exists, just so you know
+
+    //ETCLR
+        //this register exists, just so you know
+
+    //ETFRC
+        //this register exists, just so you know
+
+    //REMINDER: CTRMODE will be configured last after every ePWM is configured
+    EDIS;
+}
+
+void InitEPwm2(void){
+    EALLOW;
+
+    //TBPRD
+    EPwm2Regs.TBPRD = 7500; //10000Hz ==fPWM == 2*TBPRD*TBCLK <=Assuming that CTRMODE will be configuret as UPDOWN(2)
+
+    //TBPHS
+    EPwm2Regs.TBPHS.half.TBPHS = 2; //<====TODO calculate the phase value
+
+    //TBCTR
+    EPwm2Regs.TBCTR = 0; //<what should be the initial value?
+
+    //TBCTL
+        //CTRMODE will be set to 2 after every ePWM is configured
+    EPwm2Regs.TBCTL.bit.FREE_SOFT = 2; //ePWM will be in free run mode
+    EPwm2Regs.TBCTL.bit.CLKDIV = 0;    //150MHz == SYSCLKOUT == TBCLK
+    EPwm2Regs.TBCTL.bit.HSPCLKDIV = 0; //150MHz == SYSCLKOUT == TBCLK
+    EPwm2Regs.TBCTL.bit.SYNCOSEL = 0;  //Synchronization pulse when passed further
+    EPwm2Regs.TBCTL.bit.PHSEN = 1; //Synchronization enabled
+
+    //TBSTS
+        //this register exists, just so you know
+
+    //CMPA
+    EPwm2Regs.CMPA.half.CMPA = 7500/2;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
+
+    //CMPB
+    EPwm2Regs.CMPB = 7500; //this register is planned to be used as ADC starter some time in the future
+
+    //CMPCTL
+        //Shadow workings of the PWM module
+
+    //CMPAHR
+        //not used HighResolution part of counter-compare A value
+
+    //AQCTLA
+    EPwm2Regs.AQCTLA.bit.CAU = 2;//ASSUMPTION: EPWMxA high sets vout = vdc;
+    EPwm2Regs.AQCTLA.bit.CAD = 1;//ASSUMPTION: EPWMxA low  sets vout = 0;
+    //AQCTLB
+        //Probably not needed, to make sure deadband has to be worked out
+    //AQSFRC
+        //this register exists, just so you know
+    //AQCSFRC
+        //!!!continuous software force on outputs, very useful!!!
+    //DBCTL
+    EPwm2Regs.DBCTL.bit.IN_MODE  = 0;
+    EPwm2Regs.DBCTL.bit.POLSEL   = 2;
+    EPwm2Regs.DBCTL.bit.OUT_MODE = 3;
+    //DBRED
+    EPwm2Regs.DBRED = 600; //<=12us,  ASSUMPTION: SYSCLKOKUT == TBCLK
+
+    //DBFED
+    EPwm2Regs.DBFED = 600; //<=12us,  ASSUMPTION: SYSCLKOKUT == TBCLK
+
+    //PCCTL
+        //chopper register, not used for now
+
+    //TZSEL
+    EPwm2Regs.TZSEL.bit.OSHT1 = 1;
+
+    //TZCTL
+    EPwm2Regs.TZCTL.bit.TZA = 2; //force high ASSUMPTION EPWMxA connects vout to vdc
+    EPwm2Regs.TZCTL.bit.TZB = 1; //force low  ASSUMPTION EPWMxB connects vout to 0
+
+    //TZEINT
+    EPwm2Regs.TZEINT.bit.OST = 1;
+
+    //TZFLG
+        //this register exists, just so you know
+
+    //TZCLR
+        //this register exists, just so you know
+
+    //TZFRC
+        //this register exists, just so you know
+
+    //ETSEL
+    EPwm2Regs.ETSEL.bit.SOCAEN = 1;
+    EPwm2Regs.ETSEL.bit.SOCASEL = 2; //will happen if TBcounter equals to PRD
+    EPwm2Regs.ETSEL.bit.INTEN = 1;
+    EPwm2Regs.ETSEL.bit.INTSEL = 2; // will happen when SOCA happens
+
+    //ETPS
+    EPwm2Regs.ETPS.bit.SOCAPRD = 1;
+    EPwm2Regs.ETPS.bit.INTPRD  = 0; //ENABLE AFTER IMPLEMENTING isr for pwm functions!!!
+
+    //ETFLG
+        //this register exists, just so you know
+
+    //ETCLR
+        //this register exists, just so you know
+
+    //ETFRC
+        //this register exists, just so you know
+
+    //REMINDER: CTRMODE will be configured last after every ePWM is configured
+    EDIS;
+}
+
+void InitEPwm3(void){
+    EALLOW;
+
+    //TBPRD
+    EPwm3Regs.TBPRD = 7500; //10000Hz ==fPWM == 2*TBPRD*TBCLK <=Assuming that CTRMODE will be configuret as UPDOWN(2)
+
+    //TBPHS
+    EPwm3Regs.TBPHS.half.TBPHS = 2; //<====TODO calculate the phase value
+
+    //TBCTR
+    EPwm3Regs.TBCTR = 0; //<what should be the initial value?
+
+    //TBCTL
+        //CTRMODE will be set to 2 after every ePWM is configured
+    EPwm3Regs.TBCTL.bit.FREE_SOFT = 2; //ePWM will be in free run mode
+    EPwm3Regs.TBCTL.bit.CLKDIV = 0;    //150MHz == SYSCLKOUT == TBCLK
+    EPwm3Regs.TBCTL.bit.HSPCLKDIV = 0; //150MHz == SYSCLKOUT == TBCLK
+    EPwm3Regs.TBCTL.bit.SYNCOSEL = 3;  //Synchronization pulse disabled
+    EPwm3Regs.TBCTL.bit.PHSEN = 1; //Synchronization enabled
+
+    //TBSTS
+        //this register exists, just so you know
+
+    //CMPA
+    EPwm3Regs.CMPA.half.CMPA = 7500/2;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
+
+    //CMPB
+    EPwm3Regs.CMPB = 7500; //this register is planned to be used as ADC starter some time in the future
+
+    //CMPCTL
+        //Shadow workings of the PWM module
+
+    //CMPAHR
+        //not used HighResolution part of counter-compare A value
+
+    //AQCTLA
+    EPwm3Regs.AQCTLA.bit.CAU = 2;//ASSUMPTION: EPWMxA high sets vout = vdc;
+    EPwm3Regs.AQCTLA.bit.CAD = 1;//ASSUMPTION: EPWMxA low  sets vout = 0;
+    //AQCTLB
+        //Probably not needed, to make sure deadband has to be worked out
+    //AQSFRC
+        //this register exists, just so you know
+    //AQCSFRC
+        //!!!continuous software force on outputs, very useful!!!
+    //DBCTL
+    EPwm3Regs.DBCTL.bit.IN_MODE  = 0;
+    EPwm3Regs.DBCTL.bit.POLSEL   = 2;
+    EPwm3Regs.DBCTL.bit.OUT_MODE = 3;
+    //DBRED
+    EPwm3Regs.DBRED = 600; //<=12us,  ASSUMPTION: SYSCLKOKUT == TBCLK
+
+    //DBFED
+    EPwm3Regs.DBFED = 600; //<=12us,  ASSUMPTION: SYSCLKOKUT == TBCLK
+
+    //PCCTL
+        //chopper register, not used for now
+
+    //TZSEL
+    EPwm3Regs.TZSEL.bit.OSHT1 = 1;
+
+    //TZCTL
+    EPwm3Regs.TZCTL.bit.TZA = 2; //force high ASSUMPTION EPWMxA connects vout to vdc
+    EPwm3Regs.TZCTL.bit.TZB = 1; //force low  ASSUMPTION EPWMxB connects vout to 0
+
+    //TZEINT
+    EPwm3Regs.TZEINT.bit.OST = 1;
+
+    //TZFLG
+        //this register exists, just so you know
+
+    //TZCLR
+        //this register exists, just so you know
+
+    //TZFRC
+        //this register exists, just so you know
+
+    //ETSEL
+    EPwm3Regs.ETSEL.bit.SOCAEN = 1;
+    EPwm3Regs.ETSEL.bit.SOCASEL = 2; //will happen if TBcounter equals to PRD
+    EPwm3Regs.ETSEL.bit.INTEN = 1;
+    EPwm3Regs.ETSEL.bit.INTSEL = 2; // will happen when SOCA happens
+
+    //ETPS
+    EPwm3Regs.ETPS.bit.SOCAPRD = 1;
+    EPwm3Regs.ETPS.bit.INTPRD  = 0; //ENABLE AFTER IMPLEMENTING isr for pwm functions!!!
+
+    //ETFLG
+        //this register exists, just so you know
+
+    //ETCLR
+        //this register exists, just so you know
+
+    //ETFRC
+        //this register exists, just so you know
+
+    //REMINDER: CTRMODE will be configured last after every ePWM is configured
     EDIS;
 }
 

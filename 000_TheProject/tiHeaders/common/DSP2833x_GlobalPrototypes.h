@@ -186,6 +186,9 @@ extern void InitEPwm5Gpio(void);
 #if DSP28_EPWM6
 extern void InitEPwm6Gpio(void);
 #endif // endif DSP28_EPWM6
+extern void InitEPwm1(void);
+extern void InitEPwm2(void);
+extern void InitEPwm3(void);
 #if DSP28_EQEP1
 extern void InitEQep(void);
 extern void InitEQepGpio(void);

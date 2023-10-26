@@ -67,7 +67,7 @@ InitGpio(void)
     // d) peripheral function 3
     // By default, all are GPIO Inputs 
     //
-    GpioCtrlRegs.GPAMUX1.all = 0x0005;     // GPIO functionality GPIO0-GPIO15 GPIO0 and GPIO1 set as pwm
+    GpioCtrlRegs.GPAMUX1.all = 0x0555;     // GPIO functionality GPIO0-GPIO15 GPIO0 and GPIO1 set as pwm
     GpioCtrlRegs.GPAMUX2.all = 0x0000;     // GPIO functionality GPIO16-GPIO31
     GpioCtrlRegs.GPBMUX1.all = 0x0000;     // GPIO functionality GPIO32-GPIO39
     GpioCtrlRegs.GPBMUX2.all = 0x0000;     // GPIO functionality GPIO48-GPIO63
@@ -92,7 +92,7 @@ InitGpio(void)
     //
     // Pull-ups can be enabled or disabled
     //
-    GpioCtrlRegs.GPAPUD.all = 0x0200;      // Pullup's enabled GPIO0-GPIO31 except for GPIO9
+    GpioCtrlRegs.GPAPUD.all = 0x023F;      // Pullup's enabled GPIO7-GPIO31 except for GPIO9
     GpioCtrlRegs.GPBPUD.all = 0x0000;      // Pullup's enabled GPIO32-GPIO63
     GpioCtrlRegs.GPCPUD.all = 0x0000;      // Pullup's enabled GPIO64-GPIO79
     //GpioCtrlRegs.GPAPUD.all = 0xFFFF;    // Pullup's disabled GPIO0-GPIO31
