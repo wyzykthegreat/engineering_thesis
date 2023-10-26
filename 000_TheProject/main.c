@@ -10,6 +10,7 @@ int main(void)
     InitSysCtrl();
     InitGpio();
     InitCpuTimers();
+    InitEPwm();
     InitPieVectTable();
     InitPieCtrl();
     IER = 0x0000 | M_INT14;

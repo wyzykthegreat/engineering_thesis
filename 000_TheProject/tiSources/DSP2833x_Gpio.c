@@ -67,7 +67,7 @@ InitGpio(void)
     // d) peripheral function 3
     // By default, all are GPIO Inputs 
     //
-    GpioCtrlRegs.GPAMUX1.all = 0x0000;     // GPIO functionality GPIO0-GPIO15
+    GpioCtrlRegs.GPAMUX1.all = 0x0005;     // GPIO functionality GPIO0-GPIO15 GPIO0 and GPIO1 set as pwm
     GpioCtrlRegs.GPAMUX2.all = 0x0000;     // GPIO functionality GPIO16-GPIO31
     GpioCtrlRegs.GPBMUX1.all = 0x0000;     // GPIO functionality GPIO32-GPIO39
     GpioCtrlRegs.GPBMUX2.all = 0x0000;     // GPIO functionality GPIO48-GPIO63
