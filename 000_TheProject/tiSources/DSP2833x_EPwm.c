@@ -453,7 +453,7 @@ void InitEPwm1(void){
 
     //AQCTLA
     EPwm1Regs.AQCTLA.bit.CAU = 2;//ASSUMPTION: EPWMxA high sets vout = vdc;
-    EPwm1Regs.AQCTLA.bit.CAD = 1;//ASSUMPTION: EPWMxA low  sets vout = 0;
+    EPwm1Regs.AQCTLA.bit.CAD = 1;//ASSUMPTION: EPWMxA low sets vout = 0;
     //AQCTLB
         //Probably not needed, to make sure deadband has to be worked out
     //AQSFRC
@@ -477,8 +477,8 @@ void InitEPwm1(void){
     EPwm1Regs.TZSEL.bit.OSHT1 = 1;
 
     //TZCTL
-    EPwm1Regs.TZCTL.bit.TZA = 2; //force high ASSUMPTION EPWMxA connects vout to vdc
-    EPwm1Regs.TZCTL.bit.TZB = 1; //force low  ASSUMPTION EPWMxB connects vout to 0
+    EPwm1Regs.TZCTL.bit.TZA = 2; //force low ASSUMPTION EPWMxA turns off transistor
+    EPwm1Regs.TZCTL.bit.TZB = 2; //force low  ASSUMPTION EPWMxB turns off transistor
 
     //TZEINT
     EPwm1Regs.TZEINT.bit.OST = 1;
@@ -576,8 +576,8 @@ void InitEPwm2(void){
     EPwm2Regs.TZSEL.bit.OSHT1 = 1;
 
     //TZCTL
-    EPwm2Regs.TZCTL.bit.TZA = 2; //force high ASSUMPTION EPWMxA connects vout to vdc
-    EPwm2Regs.TZCTL.bit.TZB = 1; //force low  ASSUMPTION EPWMxB connects vout to 0
+    EPwm2Regs.TZCTL.bit.TZA = 2; //force low ASSUMPTION EPWMxA turns off transisotr
+    EPwm2Regs.TZCTL.bit.TZB = 2; //force low  ASSUMPTION EPWMxB turns off transistor
 
     //TZEINT
     EPwm2Regs.TZEINT.bit.OST = 1;
@@ -675,8 +675,8 @@ void InitEPwm3(void){
     EPwm3Regs.TZSEL.bit.OSHT1 = 1;
 
     //TZCTL
-    EPwm3Regs.TZCTL.bit.TZA = 2; //force high ASSUMPTION EPWMxA connects vout to vdc
-    EPwm3Regs.TZCTL.bit.TZB = 1; //force low  ASSUMPTION EPWMxB connects vout to 0
+    EPwm3Regs.TZCTL.bit.TZA = 2; //force low ASSUMPTION EPWMxA turns off transistor
+    EPwm3Regs.TZCTL.bit.TZB = 2; //force low ASSUMPTION EPWMxB turns off transistor
 
     //TZEINT
     EPwm3Regs.TZEINT.bit.OST = 1;

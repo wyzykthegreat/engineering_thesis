@@ -67,14 +67,14 @@ InitGpio(void)
     // d) peripheral function 3
     // By default, all are GPIO Inputs 
     //
-    GpioCtrlRegs.GPAMUX1.all = 0x0555;     // GPIO functionality GPIO0-GPIO15 GPIO0 and GPIO1 set as pwm
-    GpioCtrlRegs.GPAMUX2.all = 0x0000;     // GPIO functionality GPIO16-GPIO31
-    GpioCtrlRegs.GPBMUX1.all = 0x0000;     // GPIO functionality GPIO32-GPIO39
-    GpioCtrlRegs.GPBMUX2.all = 0x0000;     // GPIO functionality GPIO48-GPIO63
-    GpioCtrlRegs.GPCMUX1.all = 0x0000;     // GPIO functionality GPIO64-GPIO79
-    GpioCtrlRegs.GPCMUX2.all = 0x0000;     // GPIO functionality GPIO80-GPIO95
+    GpioCtrlRegs.GPAMUX1.all = 0x01000555;     // GPIO functionality GPIO6-GPIO15 except for GPIO12(TZ1), GPIO0-GPIO5 set as pwm
+    GpioCtrlRegs.GPAMUX2.all = 0x00000000;     // GPIO functionality GPIO16-GPIO31
+    GpioCtrlRegs.GPBMUX1.all = 0x00000000;     // GPIO functionality GPIO32-GPIO39
+    GpioCtrlRegs.GPBMUX2.all = 0x00000000;     // GPIO functionality GPIO48-GPIO63
+    GpioCtrlRegs.GPCMUX1.all = 0x00000000;     // GPIO functionality GPIO64-GPIO79
+    GpioCtrlRegs.GPCMUX2.all = 0x00000000;     // GPIO functionality GPIO80-GPIO95
 
-    GpioCtrlRegs.GPADIR.all = 0x0200;      // GPIO0-GPIO31 are inputs except GPIO9
+    GpioCtrlRegs.GPADIR.all = 0x0200;      // GPIO0-GPIO31 are inputs except GPIO9 (direction does not matter when using different source than gpio(?))
     GpioCtrlRegs.GPBDIR.all = 0x0000;      // GPIO32-GPIO63 are inputs   
     GpioCtrlRegs.GPCDIR.all = 0x0000;      // GPI064-GPIO95 are inputs
 
@@ -84,10 +84,10 @@ InitGpio(void)
     // b) input qualified by a sampling window
     // c) input sent asynchronously (valid for peripheral inputs only)
     //
-    GpioCtrlRegs.GPAQSEL1.all = 0x0000;    // GPIO0-GPIO15 Synch to SYSCLKOUT 
-    GpioCtrlRegs.GPAQSEL2.all = 0x0000;    // GPIO16-GPIO31 Synch to SYSCLKOUT
-    GpioCtrlRegs.GPBQSEL1.all = 0x0000;    // GPIO32-GPIO39 Synch to SYSCLKOUT 
-    GpioCtrlRegs.GPBQSEL2.all = 0x0000;    // GPIO48-GPIO63 Synch to SYSCLKOUT 
+    GpioCtrlRegs.GPAQSEL1.all = 0x03000000;    // GPIO0-GPIO15 Synch to SYSCLKOUT except for gpio12(tz1)
+    GpioCtrlRegs.GPAQSEL2.all = 0x00000000;    // GPIO16-GPIO31 Synch to SYSCLKOUT
+    GpioCtrlRegs.GPBQSEL1.all = 0x00000000;    // GPIO32-GPIO39 Synch to SYSCLKOUT
+    GpioCtrlRegs.GPBQSEL2.all = 0x00000000;    // GPIO48-GPIO63 Synch to SYSCLKOUT
 
     //
     // Pull-ups can be enabled or disabled
