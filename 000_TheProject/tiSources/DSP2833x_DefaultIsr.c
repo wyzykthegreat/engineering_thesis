@@ -540,19 +540,19 @@ ADCINT_ISR(void)     // ADC
     //
     // Insert ISR Code here
     //
-
+    AdcRegs.ADCTRL2.bit.SOC_SEQ1 = 1;
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
     //
-    // PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 
     //
     // Next two lines for debug only to halt the processor here
     // Remove after inserting ISR Code
     //
-    asm ("      ESTOP0");
-    for(;;);
+//    asm ("      ESTOP0");
+//    for(;;);
 }
 
 //

@@ -14,7 +14,7 @@ int main(void)
     InitEPwm();
     InitPieVectTable();
     InitPieCtrl();
-    IER = 0x0000 | M_INT14;
+    IER = 0x0000 | M_INT14 | M_INT1;
     IFR = 0x0000;
     EnableInterrupts();
     ERTM;
