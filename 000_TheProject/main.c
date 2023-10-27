@@ -10,6 +10,7 @@ int main(void)
     InitSysCtrl();
     InitGpio();
     InitCpuTimers();
+    InitAdc();
     InitEPwm();
     InitPieVectTable();
     InitPieCtrl();

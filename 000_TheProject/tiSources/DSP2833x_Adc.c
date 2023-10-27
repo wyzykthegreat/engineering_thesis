@@ -91,6 +91,32 @@ InitAdc(void)
     //
     AdcRegs.ADCTRL3.all = 0x00E0;  // Power up bandgap/reference/ADC circuits
     DELAY_US(ADC_usDELAY);         // Delay before converting ADC channels
+
+    //ADCTRL1 ADC Control Register 1
+    AdcRegs.ADCTRL1.bit.ACQ_PS = 15; //Acquisition window size
+    AdcRegs.ADCTRL1.bit.CPS = 1; //FCLK/2 check adcclkps in ADCTRL3 and check SysCtrlRegs.HISPCP.bit.HSPCLK in InitSysCtrl()
+    //ADCTRL2 ADC Control Register 2
+
+    //ADCMAXCONV ADC Maximun Conversion Channels
+
+    //ADCCHSELSEQ2
+
+    //ADCCHSELSEQ3
+
+    //ADCCHSELSEQ4
+
+    //ADCASEQSR
+
+    //ADCRESULT_0 - ADCRESULT_15
+
+    //ADCTRL3
+
+    //ADCST
+
+    //ADCREFSEL
+
+    //ADCOFFTRIM
+
 }
 
 //
