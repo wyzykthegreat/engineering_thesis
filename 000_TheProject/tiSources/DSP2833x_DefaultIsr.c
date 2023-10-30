@@ -541,8 +541,10 @@ ADCINT_ISR(void)     // ADC
     //
     // Insert ISR Code here
     //
-    AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
+    //GpioDataRegs.GPATOGGLE.bit.GPIO2 = 1;
+
     AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
+    AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
 
     //
     // To receive more interrupts from this PIE group, acknowledge this 
@@ -775,7 +777,9 @@ EPWM1_INT_ISR(void)     // EPWM-1
     //
     // Insert ISR Code here
     //
+    //GpioDataRegs.GPATOGGLE.bit.GPIO2 = 1;
     EALLOW;
+    EPwm1Regs.ETCLR.bit.INT = 1;
     EPwm1Regs.ETCLR.bit.SOCA = 1;
     EDIS;
 

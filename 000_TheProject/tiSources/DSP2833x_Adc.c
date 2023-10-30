@@ -95,7 +95,7 @@ InitAdc(void)
     //Current configuration ADC clock is 12.5MHz, width of SOC pulse is 15 => 80ns*10 = 800ns->0.8us
 
     //ADCTRL1 ADC Control Register 1
-    AdcRegs.ADCTRL1.bit.ACQ_PS = 9; //Acquisition window size
+    AdcRegs.ADCTRL1.bit.ACQ_PS = 14; //Acquisition window size
     AdcRegs.ADCTRL1.bit.CPS = 0; //FCLK/2 check adcclkps in ADCTRL3 and check SysCtrlRegs.HISPCP.bit.HSPCLK in InitSysCtrl()
     AdcRegs.ADCTRL1.bit.CONT_RUN = 0; //Sequencer stops after reaching end of EOS
     AdcRegs.ADCTRL1.bit.SEQ_CASC = 1; //Operating as 1 16-state sequencer
@@ -106,24 +106,22 @@ InitAdc(void)
     AdcRegs.ADCTRL2.bit.INT_MOD_SEQ1 = 0;
 
     //ADCMAXCONV ADC Maximun Conversion Channels
-    AdcRegs.ADCMAXCONV.bit.MAX_CONV1 = 3; //Vref, U phase, V phase, W phase, Bus Value
+    AdcRegs.ADCMAXCONV.all = 7; //U phase, V phase, W phase, Bus Value
 
     //ADCCHELSEQ1
-    AdcRegs.ADCCHSELSEQ1.bit.CONV00 = 0x0;  //ADC-A0 Vref (1.8V)
-    AdcRegs.ADCCHSELSEQ1.bit.CONV01 = 0x1;  //ADC-A1 Ifb-U (low side phase U current sensor)
-    AdcRegs.ADCCHSELSEQ1.bit.CONV02 = 0x9;  //ADC-B1 Ifb-V (low side phase V current sensor)
-    AdcRegs.ADCCHSELSEQ1.bit.CONV03 = 0x3;  //ADC-A3 Ifb-W (low side phase W current sensor)
+    AdcRegs.ADCCHSELSEQ1.bit.CONV00 = 0x1;  //ADC-A1 Ifb-U (low side phase U current sensor)
+    AdcRegs.ADCCHSELSEQ1.bit.CONV01 = 0x9;  //ADC-B1 Ifb-V (low side phase V current sensor)
+    AdcRegs.ADCCHSELSEQ1.bit.CONV02 = 0x3;  //ADC-A3 Ifb-W (low side phase W current sensor)
+    AdcRegs.ADCCHSELSEQ1.bit.CONV03 = 0x2;  //ADC-A2 Ifb-Sum (return current on DC bus sensor)
 
     //ADCCHSELSEQ2
-    AdcRegs.ADCCHSELSEQ2.bit.CONV04 = 0x2;  //ADC-A2 Ifb-Sum (return current on DC bus sensor)
-    AdcRegs.ADCCHSELSEQ2.bit.CONV05 = 0x0;  //ADC-A0 Vref (1.8V)
-    AdcRegs.ADCCHSELSEQ2.bit.CONV06 = 0xF;  //ADC-B7 Vfb-U (U-phase voltage sensor)
-    AdcRegs.ADCCHSELSEQ2.bit.CONV07 = 0xE;  //ADC-B6 Vfb-V (V-phase voltage sensor)
+    AdcRegs.ADCCHSELSEQ2.bit.CONV04 = 0xF;  //ADC-B7 Vfb-U (U-phase voltage sensor)
+    AdcRegs.ADCCHSELSEQ2.bit.CONV05 = 0xE;  //ADC-B6 Vfb-V (V-phase voltage sensor)
+    AdcRegs.ADCCHSELSEQ2.bit.CONV06 = 0xC;  //ADC-B4 Vfb-W (W-phase voltage sensor)
+    AdcRegs.ADCCHSELSEQ2.bit.CONV07 = 0x7;  //ADC-A7 Vfb-Bus (DC Bus voltage sensor)
 
     //ADCCHSELSEQ3
-    AdcRegs.ADCCHSELSEQ3.bit.CONV08 = 0xC;  //ADC-B4 Vfb-W (W-phase voltage sensor)
-    AdcRegs.ADCCHSELSEQ3.bit.CONV09 = 0x7;  //ADC-A7 Vfb-Bus (DC Bus voltage sensor)
-
+        //this register exists, just so you know
     //ADCCHSELSEQ4
         //this register exists, just so you know
 

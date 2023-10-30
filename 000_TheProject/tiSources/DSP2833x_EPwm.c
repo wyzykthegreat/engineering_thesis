@@ -66,8 +66,8 @@ InitEPwm(void)
     //
     //Configure CTRMODE fields to start ePWMs
     //
-    EPwm3Regs.TBCTL.bit.CTRMODE = 2;
-    EPwm2Regs.TBCTL.bit.CTRMODE = 2;
+    //EPwm3Regs.TBCTL.bit.CTRMODE = 2;
+    //EPwm2Regs.TBCTL.bit.CTRMODE = 2;
     EPwm1Regs.TBCTL.bit.CTRMODE = 2;
 
     EDIS;
@@ -430,7 +430,7 @@ void InitEPwm1(void){
 
     //TBCTL
         //CTRMODE will be set to 2 after every ePWM is configured
-    EPwm1Regs.TBCTL.bit.FREE_SOFT = 0; //!ePWM will be in free run mode
+    EPwm1Regs.TBCTL.bit.FREE_SOFT = 2; //ePWM will be in free run mode
     EPwm1Regs.TBCTL.bit.CLKDIV = 0;    //150MHz == SYSCLKOUT == TBCLK
     EPwm1Regs.TBCTL.bit.HSPCLKDIV = 0; //150MHz == SYSCLKOUT == TBCLK
     EPwm1Regs.TBCTL.bit.SYNCOSEL = 1;  //Synchronization pulse when zero == CTR
