@@ -46,6 +46,8 @@
 #ifndef DSP28x_PROJECT_H
 #define DSP28x_PROJECT_H
 
+#include <header/adcConversion.h>
+
 #include <tiHeaders/header/DSP2833x_Device.h>     // DSP2833x Headerfile Include File
 #include <tiHeaders/common/DSP2833x_Examples.h>   // DSP2833x Examples Include File
 

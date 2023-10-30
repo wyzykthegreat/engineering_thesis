@@ -286,6 +286,9 @@ extern Uint16 XintffuncsLoadSize;
 }
 #endif /* extern "C" */
 
+extern Uint16   tmr2IsrCtr;
+
+
 #endif   // - end of DSP2833x_GLOBALPROTOTYPES_H
 
 //

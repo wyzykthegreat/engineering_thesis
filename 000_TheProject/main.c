@@ -3,7 +3,8 @@
 /**
  * main.c
  */
-unsigned int tmr2IsrCtr = 0;
+Uint16 tmr2IsrCtr = 0;
+
 
 int main(void)
 {
@@ -18,6 +19,7 @@ int main(void)
     IFR = 0x0000;
     EnableInterrupts();
     ERTM;
+
     //    InitECana();
 
 
