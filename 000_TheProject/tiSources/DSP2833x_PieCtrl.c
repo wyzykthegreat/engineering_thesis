@@ -115,7 +115,7 @@ EnableInterrupts()
     // MUX
     //
     PieCtrlRegs.PIEIER1.bit.INTx6 = 1;
-
+    PieCtrlRegs.PIEIER3.bit.INTx1 = 1;
     //
 	// Enables PIE to drive a pulse into the CPU 
     //

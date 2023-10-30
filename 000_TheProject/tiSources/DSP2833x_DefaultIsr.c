@@ -102,7 +102,8 @@ INT14_ISR(void)     // CPU-Timer2
     //
         tmr2IsrCtr = 0;
     //LED flashing for test purposes
-        GpioDataRegs.GPATOGGLE.bit.GPIO9 = 1;
+        GpioDataRegs.GPCTOGGLE.bit.GPIO84 = 1;
+        GpioDataRegs.GPCTOGGLE.bit.GPIO86 = 1;
     }
     //
     //Do 100ms task
@@ -540,7 +541,9 @@ ADCINT_ISR(void)     // ADC
     //
     // Insert ISR Code here
     //
-    AdcRegs.ADCTRL2.bit.SOC_SEQ1 = 1;
+    AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
+    AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
+
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
@@ -772,19 +775,23 @@ EPWM1_INT_ISR(void)     // EPWM-1
     //
     // Insert ISR Code here
     //
+    EALLOW;
+    EPwm1Regs.ETCLR.bit.SOCA = 1;
+    EDIS;
+
 
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
     //
-    // PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
 
     //
     // Next two lines for debug only to halt the processor here
     // Remove after inserting ISR Code
     //
-    asm ("      ESTOP0");
-    for(;;);
+    //asm ("      ESTOP0");
+    //for(;;);
 }
 
 //

@@ -103,10 +103,10 @@ InitAdc(void)
     //ADCTRL2 ADC Control Register 2
     AdcRegs.ADCTRL2.bit.EPWM_SOCA_SEQ1 = 1;
     AdcRegs.ADCTRL2.bit.INT_ENA_SEQ1 = 1;
-    AdcRegs.ADCTRL2.bit.INT_MOD_SEQ1 = 1;
+    AdcRegs.ADCTRL2.bit.INT_MOD_SEQ1 = 0;
 
     //ADCMAXCONV ADC Maximun Conversion Channels
-    AdcRegs.ADCMAXCONV.bit.MAX_CONV1 = 4; //Vref, U phase, V phase, W phase, Bus Value
+    AdcRegs.ADCMAXCONV.bit.MAX_CONV1 = 3; //Vref, U phase, V phase, W phase, Bus Value
 
     //ADCCHELSEQ1
     AdcRegs.ADCCHSELSEQ1.bit.CONV00 = 0x0;  //ADC-A0 Vref (1.8V)

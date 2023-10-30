@@ -66,9 +66,9 @@ InitEPwm(void)
     //
     //Configure CTRMODE fields to start ePWMs
     //
-    //EPwm3Regs.TBCTL.bit.CTRMODE = 2;
-    //EPwm2Regs.TBCTL.bit.CTRMODE = 2;
-    //EPwm1Regs.TBCTL.bit.CTRMODE = 2;
+    EPwm3Regs.TBCTL.bit.CTRMODE = 2;
+    EPwm2Regs.TBCTL.bit.CTRMODE = 2;
+    EPwm1Regs.TBCTL.bit.CTRMODE = 2;
 
     EDIS;
 
@@ -430,7 +430,7 @@ void InitEPwm1(void){
 
     //TBCTL
         //CTRMODE will be set to 2 after every ePWM is configured
-    EPwm1Regs.TBCTL.bit.FREE_SOFT = 2; //ePWM will be in free run mode
+    EPwm1Regs.TBCTL.bit.FREE_SOFT = 0; //!ePWM will be in free run mode
     EPwm1Regs.TBCTL.bit.CLKDIV = 0;    //150MHz == SYSCLKOUT == TBCLK
     EPwm1Regs.TBCTL.bit.HSPCLKDIV = 0; //150MHz == SYSCLKOUT == TBCLK
     EPwm1Regs.TBCTL.bit.SYNCOSEL = 1;  //Synchronization pulse when zero == CTR
@@ -440,7 +440,7 @@ void InitEPwm1(void){
         //this register exists, just so you know
 
     //CMPA
-    EPwm1Regs.CMPA.half.CMPA = 7500/2;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
+    EPwm1Regs.CMPA.half.CMPA = 7500;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
 
     //CMPB
     EPwm1Regs.CMPB = 7500; //this register is planned to be used as ADC starter some time in the future
@@ -500,7 +500,7 @@ void InitEPwm1(void){
 
     //ETPS
     EPwm1Regs.ETPS.bit.SOCAPRD = 1;
-    EPwm1Regs.ETPS.bit.INTPRD  = 0; //ENABLE AFTER IMPLEMENTING isr for pwm functions!!!
+    EPwm1Regs.ETPS.bit.INTPRD  = 1; //ENABLE AFTER IMPLEMENTING isr for pwm functions!!!
 
     //ETFLG
         //this register exists, just so you know
@@ -539,7 +539,7 @@ void InitEPwm2(void){
         //this register exists, just so you know
 
     //CMPA
-    EPwm2Regs.CMPA.half.CMPA = 7500/2;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
+    EPwm2Regs.CMPA.half.CMPA = 7500;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
 
     //CMPB
     EPwm2Regs.CMPB = 7500; //this register is planned to be used as ADC starter some time in the future
@@ -592,14 +592,18 @@ void InitEPwm2(void){
         //this register exists, just so you know
 
     //ETSEL
+/*
     EPwm2Regs.ETSEL.bit.SOCAEN = 1;
     EPwm2Regs.ETSEL.bit.SOCASEL = 2; //will happen if TBcounter equals to PRD
     EPwm2Regs.ETSEL.bit.INTEN = 1;
     EPwm2Regs.ETSEL.bit.INTSEL = 2; // will happen when SOCA happens
+*/
 
     //ETPS
+/*
     EPwm2Regs.ETPS.bit.SOCAPRD = 1;
     EPwm2Regs.ETPS.bit.INTPRD  = 0; //ENABLE AFTER IMPLEMENTING isr for pwm functions!!!
+*/
 
     //ETFLG
         //this register exists, just so you know
@@ -638,7 +642,7 @@ void InitEPwm3(void){
         //this register exists, just so you know
 
     //CMPA
-    EPwm3Regs.CMPA.half.CMPA = 7500/2;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
+    EPwm3Regs.CMPA.half.CMPA = 7500;//for test purposes, ASSMPTION: above CMPA value: vout = vdc; below CMPA value: vout = 0;
 
     //CMPB
     EPwm3Regs.CMPB = 7500; //this register is planned to be used as ADC starter some time in the future
@@ -691,14 +695,18 @@ void InitEPwm3(void){
         //this register exists, just so you know
 
     //ETSEL
+/*
     EPwm3Regs.ETSEL.bit.SOCAEN = 1;
     EPwm3Regs.ETSEL.bit.SOCASEL = 2; //will happen if TBcounter equals to PRD
     EPwm3Regs.ETSEL.bit.INTEN = 1;
     EPwm3Regs.ETSEL.bit.INTSEL = 2; // will happen when SOCA happens
+*/
 
     //ETPS
+/*
     EPwm3Regs.ETPS.bit.SOCAPRD = 1;
     EPwm3Regs.ETPS.bit.INTPRD  = 0; //ENABLE AFTER IMPLEMENTING isr for pwm functions!!!
+*/
 
     //ETFLG
         //this register exists, just so you know
