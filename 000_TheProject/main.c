@@ -4,7 +4,8 @@
  * main.c
  */
 Uint16 tmr2IsrCtr = 0;
-
+struct ADC_CONVERSION_DATA_STRUCT adcConvData;
+struct ADC_CONVERTED_MEASUREMENTS adcConvMeas;
 
 int main(void)
 {
@@ -21,7 +22,7 @@ int main(void)
     ERTM;
 
     //    InitECana();
-
+    adcStructInit(&adcConvData, 8.25, 1.65);
 
     for(;;);
 	return 0;

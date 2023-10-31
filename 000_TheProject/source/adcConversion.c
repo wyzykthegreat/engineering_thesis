@@ -8,7 +8,7 @@
 #include "header/adcConversion.h"
 
 float adcToReal(struct ADC_CONVERSION_DATA_STRUCT *data, unsigned int *meas){
-    return ((((4095-*meas)*3.0)/4096.0)-data->offset)*data->gain;
+    return 0; //the converted measurement will be returned in this line
 }
 
 void adcStructInit(struct ADC_CONVERSION_DATA_STRUCT *data, float gain, float offset){

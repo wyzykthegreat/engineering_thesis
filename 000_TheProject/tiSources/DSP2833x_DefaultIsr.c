@@ -543,6 +543,8 @@ ADCINT_ISR(void)     // ADC
     // Insert ISR Code here
     //
     //GpioDataRegs.GPATOGGLE.bit.GPIO2 = 1;
+    adcConvMeas.IfbSum = 30;
+
 
     AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
     AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;

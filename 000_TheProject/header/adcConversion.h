@@ -13,5 +13,4 @@
 float   adcToReal(struct ADC_CONVERSION_DATA_STRUCT *data, unsigned int *meas);
 void    adcStructInit(struct ADC_CONVERSION_DATA_STRUCT *data, float gain, float offset);
 
-
 #endif /* HEADER_ADCCONVERSION_H_ */
