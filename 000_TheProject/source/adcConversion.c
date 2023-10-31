@@ -5,7 +5,7 @@
  *      Author: wyzyk
  */
 
-#include "header/adcConversion.h"
+#include "adcConversion.h"
 
 float adcToReal(struct ADC_CONVERSION_DATA_STRUCT *data, unsigned int *meas){
     return 0; //the converted measurement will be returned in this line

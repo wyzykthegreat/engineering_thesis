@@ -8,7 +8,7 @@
 #ifndef HEADER_PIREGULATOR_H_
 #define HEADER_PIREGULATOR_H_
 
-#include "PiRegulatorStructures.h"
+//#include "header/PiRegulatorStructures.h"
 
 float piReg(struct PI_REGULATOR_STRUCT *data);
 
