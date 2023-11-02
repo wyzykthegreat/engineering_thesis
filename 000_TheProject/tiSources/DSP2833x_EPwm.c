@@ -66,8 +66,8 @@ InitEPwm(void)
     //
     //Configure CTRMODE fields to start ePWMs
     //
-    //EPwm3Regs.TBCTL.bit.CTRMODE = 2;
-    //EPwm2Regs.TBCTL.bit.CTRMODE = 2;
+    EPwm3Regs.TBCTL.bit.CTRMODE = 2;
+    EPwm2Regs.TBCTL.bit.CTRMODE = 2;
     EPwm1Regs.TBCTL.bit.CTRMODE = 2;
 
     EDIS;
@@ -420,7 +420,7 @@ void InitEPwm1(void){
     EALLOW;
 
     //TBPRD
-    EPwm1Regs.TBPRD = 7500; //10000Hz ==fPWM == 2*TBPRD*TBCLK <=Assuming that CTRMODE will be configuret as UPDOWN(2)
+    EPwm1Regs.TBPRD = 7500; //10000Hz ==fPWM == 2*TBPRD*TBCLK <=Assuming that CTRMODE will be configured as UPDOWN(2)
 
     //TBPHS
     EPwm1Regs.TBPHS.half.TBPHS = 0;

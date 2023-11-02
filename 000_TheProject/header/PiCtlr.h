@@ -8,8 +8,10 @@
 #ifndef HEADER_PICTLR_H_
 #define HEADER_PICTLR_H_
 
-//#include "header/PiRegulatorStructures.h"
+#include "PiCtlrStructs.h"
 
-float piReg(struct PI_REGULATOR_STRUCT *data);
+void initPiCtlrStruct(struct PI_CONTROLLER_STRUCT *data, float ki, float kp, float ts, float satHi, float satLo);
+float calcPiCtl(struct PI_CONTROLLER_STRUCT *data, float realValue, float setValue);
+
 
 #endif /* HEADER_PICTLR_H_ */

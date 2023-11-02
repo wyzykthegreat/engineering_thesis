@@ -1,10 +1,10 @@
 #include "DSP28x_Project.h"
 #include "GlobalVariables.h"
 #include "adcConversion.h"
+#include "PiCtlr.h"
 /**
  * main.c
  */
-
 
 int main(void)
 {
@@ -22,7 +22,9 @@ int main(void)
 
     //    InitECana();
     adcDataStructInit(&adcConvDataI, 8.25, 1.65);
-    adcDataStructInit(&adcConvDataV, (9.09/(300.0+820.0+9.09)), 0);
+    adcDataStructInit(&adcConvDataV, ((300.0+820.0+9.09)/9.09), 0);
+
+    //initPiCtlrStruct(&piCtlrTest, 1, 0, 0.0001, -1, 1);
 
     for(;;);
 	return 0;

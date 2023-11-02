@@ -10,19 +10,25 @@
 
 struct PI_CONTROLLER_STRUCT{
 
-    float uPrv;
-    float y;
+    float diffVal;
+    float realVal;
+    float setVal;
+    float output;
 
-    float kp;
+    float itg;
+    float kiOut;
+    float kpOut;
+    float sumOut;
+    float kiStop;
+
     float ki;
+    float kp;
     float ts;
-
     float satHi;
     float satLo;
 
-    float cndItg;
 
-    float KItTSmKP
+
 };
 
 #endif /* HEADER_PICTLRSTRUCTS_H_ */
