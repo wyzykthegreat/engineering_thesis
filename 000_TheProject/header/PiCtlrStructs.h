@@ -1,14 +1,14 @@
 /*
- * PiReglatorStructures.h
+ * PiCtlrStructs.h
  *
  *  Created on: Oct 27, 2023
  *      Author: wyzyk
  */
 
-#ifndef HEADER_PIREGULATORSTRUCTURES_H_
-#define HEADER_PIREGULATORSTRUCTURES_H_
+#ifndef HEADER_PICTLRSTRUCTS_H_
+#define HEADER_PICTLRSTRUCTS_H_
 
-struct PI_REGULATOR_STRUCT{
+struct PI_CONTROLLER_STRUCT{
 
     float uPrv;
     float y;
@@ -25,4 +25,4 @@ struct PI_REGULATOR_STRUCT{
     float KItTSmKP
 };
 
-#endif /* HEADER_PIREGULATORSTRUCTURES_H_ */
+#endif /* HEADER_PICTLRSTRUCTS_H_ */
