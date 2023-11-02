@@ -543,15 +543,6 @@ ADCINT_ISR(void)     // ADC
     // Insert ISR Code here
     //
     //GpioDataRegs.GPATOGGLE.bit.GPIO2 = 1;
-    adcConvMeas.IfbU = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0);
-    adcConvMeas.IfbV = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1);
-    adcConvMeas.IfbW = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2);
-    adcConvMeas.IfbSum = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3);
-
-    adcConvMeas.VfbU = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4);
-    adcConvMeas.VfbV = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5);
-    adcConvMeas.VfbW = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6);
-    adcConvMeas.VfbDC = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7);
 
 
     AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
@@ -794,7 +785,15 @@ EPWM1_INT_ISR(void)     // EPWM-1
     EPwm1Regs.ETCLR.bit.SOCA = 1;
     EDIS;
 
+    adcConvMeas.IfbU = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0);
+    adcConvMeas.IfbV = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1);
+    adcConvMeas.IfbW = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2);
+    adcConvMeas.IfbSum = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3);
 
+    adcConvMeas.VfbU = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4);
+    adcConvMeas.VfbV = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5);
+    adcConvMeas.VfbW = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6);
+    adcConvMeas.VfbDC = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7);
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
