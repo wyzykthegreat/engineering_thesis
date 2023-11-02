@@ -286,8 +286,6 @@ extern Uint16 XintffuncsLoadSize;
 }
 #endif /* extern "C" */
 
-extern Uint16   tmr2IsrCtr;
-extern struct ADC_CONVERTED_MEASUREMENTS adcConvMeas;
 
 #endif   // - end of DSP2833x_GLOBALPROTOTYPES_H
 

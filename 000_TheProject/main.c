@@ -1,11 +1,10 @@
 #include "DSP28x_Project.h"
-
+#include "GlobalVariables.h"
+#include "adcConversion.h"
 /**
  * main.c
  */
-Uint16 tmr2IsrCtr = 0;
-struct ADC_CONVERSION_DATA_STRUCT adcConvData;
-struct ADC_CONVERTED_MEASUREMENTS adcConvMeas;
+
 
 int main(void)
 {
@@ -22,7 +21,8 @@ int main(void)
     ERTM;
 
     //    InitECana();
-    adcStructInit(&adcConvData, 8.25, 1.65);
+    adcDataStructInit(&adcConvDataI, 8.25, 1.65);
+    adcDataStructInit(&adcConvDataV, (9.09/(300.0+820.0+9.09)), 0);
 
     for(;;);
 	return 0;

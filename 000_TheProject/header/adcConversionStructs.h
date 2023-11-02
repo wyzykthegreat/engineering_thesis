@@ -11,6 +11,7 @@
 struct ADC_CONVERSION_DATA_STRUCT{
     float gain;
     float offset;
+    volatile float out;
 };
 
 struct ADC_CONVERTED_MEASUREMENTS{

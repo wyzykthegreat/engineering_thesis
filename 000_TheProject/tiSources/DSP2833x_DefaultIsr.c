@@ -57,8 +57,8 @@
 //
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
-
-
+#include "GlobalVariables.h"
+#include "adcConversion.h"
 //
 // INT13_ISR - Connected to INT13 of CPU (use MINT13 mask):
 // Note CPU-Timer1 is reserved for TI use, however XINT13
@@ -543,7 +543,15 @@ ADCINT_ISR(void)     // ADC
     // Insert ISR Code here
     //
     //GpioDataRegs.GPATOGGLE.bit.GPIO2 = 1;
-    adcConvMeas.IfbSum = 30;
+    adcConvMeas.IfbU = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0);
+    adcConvMeas.IfbV = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1);
+    adcConvMeas.IfbW = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2);
+    adcConvMeas.IfbSum = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3);
+
+    adcConvMeas.VfbU = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4);
+    adcConvMeas.VfbV = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5);
+    adcConvMeas.VfbW = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6);
+    adcConvMeas.VfbDC = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7);
 
 
     AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
