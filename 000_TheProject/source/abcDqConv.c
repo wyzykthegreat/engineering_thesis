@@ -25,8 +25,10 @@ void abcToDq(struct ABCDQ_STRUCT *data, float a, float b, float c, float eAngle)
     data->c = c;
     data->eAngle = eAngle;
 
-    data->d = 2.0/3.0 * ((data->a*sin(eAngle))+(data->b*sin((data->eAngle-(2.0*M_PI/3.0)))+(data->c*sin((eAngle+(2.0*M_PI/3.0))))));
-    data->q = 2.0/3.0 * ((data->a*cos(eAngle))+(data->b*cos((data->eAngle-(2.0*M_PI/3.0)))+(data->c*cos((eAngle+(2.0*M_PI/3.0))))));
+    //Vd    =    2/3    * (     a * sin(eAngle)     +       b *  sin(eAngle - (2/3*PI))              +   c * sin(eAngle + (2/3*PI))  );
+    data->d = (2.0/3.0) * ( (data->a*cos(eAngle))   +   (data->b*cos((data->eAngle-(M_PI*2.0/3.0)))) + (data->c*cos((eAngle+(2.0*M_PI/3.0)))));
+
+    data->q = (2.0/3.0) * (( (data->a*sin(eAngle)*(-1))  -   (data->b*sin((data->eAngle-(2.0*M_PI/3.0))) -(data->c*sin((eAngle+(2.0*M_PI/3.0)))))));
     data->zero = (a+b+c)/3.0;
 }
 
@@ -36,7 +38,7 @@ void dqToAbc(struct ABCDQ_STRUCT *data, float d, float q, float eAngle){
     data->q = q;
     data->eAngle = eAngle;
 
-    data->a = data->d*sin(eAngle) + data->q*cos(eAngle) + data->zero;
+    data->a = data->d*cos(eAngle) - data->q*sin(eAngle) + data->zero;
     data->b = data->d*sin((data->eAngle-((2.0*M_PI)/3.0))) + data->q*cos((data->eAngle-((2.0*M_PI)/3.0))) + data->zero;
     data->c = data->d*sin((data->eAngle+((2.0*M_PI)/3.0))) + data->q*cos((data->eAngle+((2.0*M_PI)/3.0))) + data->zero;
 }

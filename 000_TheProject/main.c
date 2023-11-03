@@ -2,9 +2,12 @@
 #include "GlobalVariables.h"
 #include "adcConversion.h"
 #include "PiCtlr.h"
+#include "abcDqConv.h"
 /**
  * main.c
  */
+float aTodq = 0.3, bTodq = 0.7, cTodq = -0.4, dToabc = 0.4, qToabc = 0.7, ang = M_PI/2;
+
 
 int main(void)
 {
@@ -26,6 +29,13 @@ int main(void)
 
     //initPiCtlrStruct(&piCtlrTest, 1, 0, 0.0001, -1, 1);
 
-    for(;;);
+    abcdqStructInit(&abcdqTest1);
+    abcdqStructInit(&abcdqTest2);
+
+
+    for(;;){
+        abcToDq(&abcdqTest1, aTodq, bTodq, cTodq, ang);
+        dqToAbc(&abcdqTest2, dToabc, qToabc, ang);
+    }
 	return 0;
 }
