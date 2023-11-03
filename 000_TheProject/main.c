@@ -8,6 +8,7 @@
 
 int main(void)
 {
+    pwmDuty = 0;
     InitSysCtrl();
     InitGpio();
     InitCpuTimers();

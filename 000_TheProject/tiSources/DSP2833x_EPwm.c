@@ -66,8 +66,8 @@ InitEPwm(void)
     //
     //Configure CTRMODE fields to start ePWMs
     //
-    EPwm3Regs.TBCTL.bit.CTRMODE = 2;
-    EPwm2Regs.TBCTL.bit.CTRMODE = 2;
+    //EPwm3Regs.TBCTL.bit.CTRMODE = 2;
+    //EPwm2Regs.TBCTL.bit.CTRMODE = 2;
     EPwm1Regs.TBCTL.bit.CTRMODE = 2;
 
     EDIS;

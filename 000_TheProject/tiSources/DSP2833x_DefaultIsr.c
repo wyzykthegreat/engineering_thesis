@@ -95,7 +95,6 @@ INT14_ISR(void)     // CPU-Timer2
     CpuTimer2Regs.TCR.bit.TRB = 1;
     tmr2IsrCtr++;
 
-
     if(4 < tmr2IsrCtr){
 
     //
@@ -109,7 +108,14 @@ INT14_ISR(void)     // CPU-Timer2
     //
     //Do 100ms task
 
-
+    if(100 < pwmDuty){
+        pwmDuty = 100;
+    } else if (0 > pwmDuty){
+        pwmDuty = 0;
+    }
+    EALLOW;
+    EPwm1Regs.CMPA.half.CMPA = (100-pwmDuty)*75;
+    EDIS;
     //
     //Send CAN frames
     //
