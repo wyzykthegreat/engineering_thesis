@@ -17,3 +17,4 @@ void adcDataStructInit(struct ADC_CONVERSION_DATA_STRUCT *data, float gain, floa
     data->offset = offset;
     data->out = 0;
 }
+

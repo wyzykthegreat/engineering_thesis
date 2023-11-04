@@ -792,15 +792,15 @@ EPWM1_INT_ISR(void)     // EPWM-1
     EDIS;
 
 
-    adcConvMeas.IfbU = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0);
-    adcConvMeas.IfbV = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1);
-    adcConvMeas.IfbW = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2);
-    adcConvMeas.IfbSum = adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3);
+    adcConvMeas.IfbU =   calReal(&calStrIfbU, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0));
+    adcConvMeas.IfbV =   calReal(&calStrIfbV, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1));
+    adcConvMeas.IfbW =   calReal(&calStrIfbW, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2));
+    adcConvMeas.IfbSum = calReal(&calStrIfbSum, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3));
 
-    adcConvMeas.VfbU = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4);
-    adcConvMeas.VfbV = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5);
-    adcConvMeas.VfbW = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6);
-    adcConvMeas.VfbDC = adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7);
+    adcConvMeas.VfbU =  calReal(&calStrVfbU, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4));
+    adcConvMeas.VfbV =  calReal(&calStrVfbV, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5));
+    adcConvMeas.VfbW =  calReal(&calStrVfbW, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6));
+    adcConvMeas.VfbDC = calReal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt

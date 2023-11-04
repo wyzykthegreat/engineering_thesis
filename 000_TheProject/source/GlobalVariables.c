@@ -6,6 +6,7 @@
  */
 #include "adcConversionStructs.h"
 #include "PiCtlrStructs.h"
+#include "calibrateValueStructs.h"
 
 unsigned int tmr2IsrCtr;
 unsigned int testCtr;
@@ -16,14 +17,16 @@ struct ADC_CONVERTED_MEASUREMENTS adcConvMeas;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataV;
 
+struct VALUE_CALIBRATION_STRUCT calStrIfbU;
+struct VALUE_CALIBRATION_STRUCT calStrIfbV;
+struct VALUE_CALIBRATION_STRUCT calStrIfbW;
+struct VALUE_CALIBRATION_STRUCT calStrIfbSum;
+struct VALUE_CALIBRATION_STRUCT calStrVfbU;
+struct VALUE_CALIBRATION_STRUCT calStrVfbV;
+struct VALUE_CALIBRATION_STRUCT calStrVfbW;
+struct VALUE_CALIBRATION_STRUCT calStrVfbDC;
 
-struct ADC_CALIBRATE{
-    unsigned int count;
-    unsigned int measurements[25000];
-    float meanValue;
-    float offset;
-    float gain;
-};
+
 
 
 struct PI_CONTROLLER_STRUCT piCtlrTest;
