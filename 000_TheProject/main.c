@@ -26,7 +26,9 @@ int main(void)
     adcDataStructInit(&adcConvDataI, 8.25, 1.65);
     adcDataStructInit(&adcConvDataV, ((300.0+820.0+9.09)/9.09), 0);
 
-    valCalStructInit(&calStrIfbU, 1, 0);
+    adcConvMeasStructInit(&adcConvMeas);
+
+    valCalStructInit(&calStrIfbU, 2, 0.5);
     valCalStructInit(&calStrIfbV, 1, 0);
     valCalStructInit(&calStrIfbW, 1, 0);
     valCalStructInit(&calStrIfbSum, 1, 0);
@@ -35,6 +37,7 @@ int main(void)
     valCalStructInit(&calStrVfbW, 1, 0);
     valCalStructInit(&calStrVfbDC, 1, 0);
 
+    meanValMeasStructInit(&measMeanValStruct);
 
     //initPiCtlrStruct(&piCtlrTest, 1, 0, 0.0001, -1, 1);
 

@@ -59,6 +59,7 @@
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 #include "GlobalVariables.h"
 #include "adcConversion.h"
+#include "calibrateValue.h"
 //
 // INT13_ISR - Connected to INT13 of CPU (use MINT13 mask):
 // Note CPU-Timer1 is reserved for TI use, however XINT13
@@ -791,16 +792,19 @@ EPWM1_INT_ISR(void)     // EPWM-1
     EPwm1Regs.ETCLR.bit.SOCA = 1;
     EDIS;
 
+    measMeanVal(&measMeanValStruct);
 
-    adcConvMeas.IfbU =   calReal(&calStrIfbU, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0));
-    adcConvMeas.IfbV =   calReal(&calStrIfbV, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1));
-    adcConvMeas.IfbW =   calReal(&calStrIfbW, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2));
-    adcConvMeas.IfbSum = calReal(&calStrIfbSum, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3));
+    adcConvMeas.IfbU =   calVal(&calStrIfbU, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0));
+    adcConvMeas.IfbV =   calVal(&calStrIfbV, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1));
+    adcConvMeas.IfbW =   calVal(&calStrIfbW, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2));
+    adcConvMeas.IfbSum = calVal(&calStrIfbSum, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3));
 
-    adcConvMeas.VfbU =  calReal(&calStrVfbU, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4));
-    adcConvMeas.VfbV =  calReal(&calStrVfbV, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5));
-    adcConvMeas.VfbW =  calReal(&calStrVfbW, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6));
-    adcConvMeas.VfbDC = calReal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
+    adcConvMeas.VfbU =  calVal(&calStrVfbU, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4));
+    adcConvMeas.VfbV =  calVal(&calStrVfbV, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5));
+    adcConvMeas.VfbW =  calVal(&calStrVfbW, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6));
+    adcConvMeas.VfbDC = calVal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
+
+
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt

@@ -18,3 +18,14 @@ void adcDataStructInit(struct ADC_CONVERSION_DATA_STRUCT *data, float gain, floa
     data->out = 0;
 }
 
+void adcConvMeasStructInit(struct ADC_CONVERTED_MEASUREMENTS_STRUCT *data){
+    data->IfbSum = 0;
+    data->IfbU = 0;
+    data->IfbV = 0;
+    data->IfbW = 0;
+
+    data->VfbU = 0;
+    data->VfbV = 0;
+    data->VfbW = 0;
+    data->VfbDC = 0;
+}

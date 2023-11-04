@@ -13,7 +13,7 @@ unsigned int testCtr;
 
 float pwmDuty;
 
-struct ADC_CONVERTED_MEASUREMENTS adcConvMeas;
+struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataV;
 
@@ -26,7 +26,7 @@ struct VALUE_CALIBRATION_STRUCT calStrVfbV;
 struct VALUE_CALIBRATION_STRUCT calStrVfbW;
 struct VALUE_CALIBRATION_STRUCT calStrVfbDC;
 
-
+struct MEAN_VALUE_MEASUREMENT_STRUCT measMeanValStruct;
 
 
 struct PI_CONTROLLER_STRUCT piCtlrTest;

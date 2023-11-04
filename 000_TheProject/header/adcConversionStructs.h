@@ -14,7 +14,7 @@ struct ADC_CONVERSION_DATA_STRUCT{
     volatile float out;
 };
 
-struct ADC_CONVERTED_MEASUREMENTS{
+struct ADC_CONVERTED_MEASUREMENTS_STRUCT{
     float IfbU;
     float IfbV;
     float IfbW;
