@@ -8,7 +8,17 @@
 #ifndef HEADER_ABCDQCONVSTRUCTS_H_
 #define HEADER_ABCDQCONVSTRUCTS_H_
 
+struct ABCDQ_STRUCT {
+    float a;
+    float b;
+    float c;
 
+    float d;
+    float q;
+    float zero;
+
+    float eAngle;
+};
 
 
 

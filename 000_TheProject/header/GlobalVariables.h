@@ -33,4 +33,6 @@ extern struct MEAN_VALUE_MEASUREMENT_STRUCT measMeanValStruct;
 
 extern struct PI_CONTROLLER_STRUCT piCtlrTest;
 
+extern struct ABCDQ_STRUCT abcdqTest1;
+extern struct ABCDQ_STRUCT abcdqTest2;
 #endif /* HEADER_GLOBALVARIABLES_H_ */
