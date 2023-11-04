@@ -2,11 +2,8 @@
 #include "GlobalVariables.h"
 #include "adcConversion.h"
 #include "PiCtlr.h"
-<<<<<<< HEAD
 #include "calibrateValue.h"
-=======
 #include "abcDqConv.h"
->>>>>>> refs/heads/abcTodq_and_dqToabc
 /**
  * main.c
  */

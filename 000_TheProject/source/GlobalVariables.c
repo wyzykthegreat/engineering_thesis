@@ -6,11 +6,9 @@
  */
 #include "adcConversionStructs.h"
 #include "PiCtlrStructs.h"
-<<<<<<< HEAD
 #include "calibrateValueStructs.h"
-=======
 #include "abcDqConvStructs.h"
->>>>>>> refs/heads/abcTodq_and_dqToabc
+
 
 unsigned int tmr2IsrCtr;
 unsigned int testCtr;
