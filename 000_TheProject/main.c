@@ -12,7 +12,9 @@ float aTodq = 0.3, bTodq = 0.7, cTodq = -0.4, dToabc = 0.4, qToabc = 0.7, ang = 
 
 int main(void)
 {
-    pwmDuty = 0;
+    uPwmDuty = 100;
+    vPwmDuty = 100;
+    wPwmDuty = 100;
     InitSysCtrl();
     InitGpio();
     InitCpuTimers();
@@ -31,14 +33,14 @@ int main(void)
 
     adcConvMeasStructInit(&adcConvMeas);
 
-    valCalStructInit(&calStrIfbU, 2, 0.5);
-    valCalStructInit(&calStrIfbV, 1, 0);
-    valCalStructInit(&calStrIfbW, 1, 0);
+    valCalStructInit(&calStrIfbU, 0.7, -0.05);
+    valCalStructInit(&calStrIfbV, 0.7, 0);
+    valCalStructInit(&calStrIfbW, 0.7, -0.09);
     valCalStructInit(&calStrIfbSum, 1, 0);
     valCalStructInit(&calStrVfbU, 1, 0);
     valCalStructInit(&calStrVfbV, 1, 0);
     valCalStructInit(&calStrVfbW, 1, 0);
-    valCalStructInit(&calStrVfbDC, 1, 0);
+    valCalStructInit(&calStrVfbDC, 1, -0.34512);
 
     meanValMeasStructInit(&measMeanValStruct);
 

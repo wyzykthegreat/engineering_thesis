@@ -95,7 +95,7 @@ InitAdc(void)
     //Current configuration ADC clock is 12.5MHz, width of SOC pulse is 15 => 80ns*10 = 800ns->0.8us
 
     //ADCTRL1 ADC Control Register 1
-    AdcRegs.ADCTRL1.bit.ACQ_PS = 14; //Acquisition window size
+    AdcRegs.ADCTRL1.bit.ACQ_PS = 4; //Acquisition window size
     AdcRegs.ADCTRL1.bit.CPS = 0; //FCLK/2 check adcclkps in ADCTRL3 and check SysCtrlRegs.HISPCP.bit.HSPCLK in InitSysCtrl()
     AdcRegs.ADCTRL1.bit.CONT_RUN = 0; //Sequencer stops after reaching end of EOS
     AdcRegs.ADCTRL1.bit.SEQ_CASC = 1; //Operating as 1 16-state sequencer

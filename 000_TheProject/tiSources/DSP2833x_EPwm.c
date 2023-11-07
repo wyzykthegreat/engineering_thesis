@@ -66,8 +66,8 @@ InitEPwm(void)
     //
     //Configure CTRMODE fields to start ePWMs
     //
-    //EPwm3Regs.TBCTL.bit.CTRMODE = 2;
-    //EPwm2Regs.TBCTL.bit.CTRMODE = 2;
+    EPwm3Regs.TBCTL.bit.CTRMODE = 2;
+    EPwm2Regs.TBCTL.bit.CTRMODE = 2;
     EPwm1Regs.TBCTL.bit.CTRMODE = 2;
 
     EDIS;
@@ -494,9 +494,9 @@ void InitEPwm1(void){
 
     //ETSEL
     EPwm1Regs.ETSEL.bit.SOCAEN = 1;
-    EPwm1Regs.ETSEL.bit.SOCASEL = 2; //will happen if TBcounter equals to PRD
+    EPwm1Regs.ETSEL.bit.SOCASEL = 1; //will happen if TBcounter equals to PRD
     EPwm1Regs.ETSEL.bit.INTEN = 1;
-    EPwm1Regs.ETSEL.bit.INTSEL = 2; // will happen when SOCA happens
+    EPwm1Regs.ETSEL.bit.INTSEL = 1; // will happen when SOCA happens
 
     //ETPS
     EPwm1Regs.ETPS.bit.SOCAPRD = 1;

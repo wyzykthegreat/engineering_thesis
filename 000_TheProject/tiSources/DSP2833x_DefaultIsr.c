@@ -109,13 +109,25 @@ INT14_ISR(void)     // CPU-Timer2
     //
     //Do 100ms task
 
-    if(100 < pwmDuty){
-        pwmDuty = 100;
-    } else if (0 > pwmDuty){
-        pwmDuty = 0;
+    if(100 < uPwmDuty){
+        uPwmDuty = 100;
+    } else if (0 > uPwmDuty){
+        uPwmDuty = 0;
     }
+    if(100 < vPwmDuty){
+            vPwmDuty = 100;
+        } else if (0 > vPwmDuty){
+            vPwmDuty = 0;
+        }
+    if(100 < wPwmDuty){
+            wPwmDuty = 100;
+        } else if (0 > wPwmDuty){
+            wPwmDuty = 0;
+        }
     EALLOW;
-    EPwm1Regs.CMPA.half.CMPA = (100-pwmDuty)*75;
+    EPwm1Regs.CMPA.half.CMPA = (100-uPwmDuty)*75;
+    EPwm2Regs.CMPA.half.CMPA = (100-vPwmDuty)*75;
+    EPwm3Regs.CMPA.half.CMPA = (100-wPwmDuty)*75;
     EDIS;
     //
     //Send CAN frames
@@ -449,19 +461,21 @@ SEQ1INT_ISR(void)   //SEQ1 ADC
     //
     // Insert ISR Code here
     //
-
+    //GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+    AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
+    AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
     //
-    // PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
+     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 
     //
     // Next two lines for debug only to halt the processor here
     // Remove after inserting ISR Code
     //
-    asm ("      ESTOP0");
-    for(;;);
+    //asm ("      ESTOP0");
+    //for(;;);
 }
 
 //
@@ -551,10 +565,10 @@ ADCINT_ISR(void)     // ADC
     //
     //GpioDataRegs.GPATOGGLE.bit.GPIO2 = 1;
 
-
+/*    GpioDataRegs.GPACLEAR = 1;
     AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
-    AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
-
+    AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;*/
+    //GpioDataRegs.GPASET.bit.GPIO15 = 1;
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
@@ -565,8 +579,8 @@ ADCINT_ISR(void)     // ADC
     // Next two lines for debug only to halt the processor here
     // Remove after inserting ISR Code
     //
-//    asm ("      ESTOP0");
-//    for(;;);
+    asm ("      ESTOP0");
+    for(;;);
 }
 
 //
@@ -786,7 +800,9 @@ EPWM1_INT_ISR(void)     // EPWM-1
     //
     // Insert ISR Code here
     //
+    //GpioDataRegs.GPASET.bit.GPIO15 = 1;
     //GpioDataRegs.GPATOGGLE.bit.GPIO2 = 1;
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
     EALLOW;
     EPwm1Regs.ETCLR.bit.INT = 1;
     EPwm1Regs.ETCLR.bit.SOCA = 1;
@@ -804,12 +820,12 @@ EPWM1_INT_ISR(void)     // EPWM-1
     adcConvMeas.VfbW =  calVal(&calStrVfbW, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6));
     adcConvMeas.VfbDC = calVal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
 
-
+    //GpioDataRegs.GPASET.bit.GPIO15 = 1;
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
     //
-    PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
+
 
     //
     // Next two lines for debug only to halt the processor here

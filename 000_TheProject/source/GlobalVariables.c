@@ -13,7 +13,9 @@
 unsigned int tmr2IsrCtr;
 unsigned int testCtr;
 
-float pwmDuty;
+float uPwmDuty;
+float vPwmDuty;
+float wPwmDuty;
 
 struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;

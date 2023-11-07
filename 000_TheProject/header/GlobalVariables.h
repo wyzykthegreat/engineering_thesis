@@ -14,7 +14,9 @@
 extern unsigned int   tmr2IsrCtr;
 extern unsigned int   testCtr;
 
-extern float pwmDuty;
+extern float uPwmDuty;
+extern float vPwmDuty;
+extern float wPwmDuty;
 
 extern struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 extern struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
