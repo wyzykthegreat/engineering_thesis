@@ -60,6 +60,7 @@
 #include "GlobalVariables.h"
 #include "adcConversion.h"
 #include "calibrateValue.h"
+#include "PiCtlr.h"
 //
 // INT13_ISR - Connected to INT13 of CPU (use MINT13 mask):
 // Note CPU-Timer1 is reserved for TI use, however XINT13
@@ -103,13 +104,14 @@ INT14_ISR(void)     // CPU-Timer2
     //
         tmr2IsrCtr = 0;
     //LED flashing for test purposes
-        GpioDataRegs.GPCTOGGLE.bit.GPIO84 = 1;
+        //GpioDataRegs.GPCTOGGLE.bit.GPIO84 = 1;
         GpioDataRegs.GPCTOGGLE.bit.GPIO86 = 1;
+
     }
     //
     //Do 100ms task
 
-    if(100 < uPwmDuty){
+/*    if(100 < uPwmDuty){
         uPwmDuty = 100;
     } else if (0 > uPwmDuty){
         uPwmDuty = 0;
@@ -123,11 +125,11 @@ INT14_ISR(void)     // CPU-Timer2
             wPwmDuty = 100;
         } else if (0 > wPwmDuty){
             wPwmDuty = 0;
-        }
+        }*/
     EALLOW;
-    EPwm1Regs.CMPA.half.CMPA = (100-uPwmDuty)*75;
-    EPwm2Regs.CMPA.half.CMPA = (100-vPwmDuty)*75;
-    EPwm3Regs.CMPA.half.CMPA = (100-wPwmDuty)*75;
+    //EPwm1Regs.CMPA.half.CMPA = (100-uPwmDuty)*75;
+    //EPwm2Regs.CMPA.half.CMPA = (100-vPwmDuty)*75;
+    //EPwm3Regs.CMPA.half.CMPA = (100-wPwmDuty)*75;
     EDIS;
     //
     //Send CAN frames
@@ -461,15 +463,37 @@ SEQ1INT_ISR(void)   //SEQ1 ADC
     //
     // Insert ISR Code here
     //
-    //GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
+    //GpioDataRegs.GPCSET.bit.GPIO84 = 1;
     AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
     AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
+
+    measMeanVal(&measMeanValStruct);
+
+    adcConvMeas.IfbU =   calVal(&calStrIfbU, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0));
+    adcConvMeas.IfbV =   calVal(&calStrIfbV, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1));
+    //adcConvMeas.IfbW =   calVal(&calStrIfbW, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2));
+    //adcConvMeas.IfbSum = calVal(&calStrIfbSum, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3));
+
+    adcConvMeas.VfbU =  calVal(&calStrVfbU, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4));
+    adcConvMeas.VfbV =  calVal(&calStrVfbV, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5));
+    //adcConvMeas.VfbW =  calVal(&calStrVfbW, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6));
+    adcConvMeas.VfbDC = calVal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
+    uPwmDuty = (calcPiCtl(&piCtlrTestI, -adcConvMeas.IfbV, iUSet)+5.0)*10;
+
+    if(50 < uPwmDuty){
+        uPwmDuty = 50;
+    } else if (0 > uPwmDuty){
+        uPwmDuty = 0;
+    }
+    EALLOW;
+    EPwm1Regs.CMPA.half.CMPA = (100-uPwmDuty)*75;
+    EDIS;
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
     //
      PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
-
+     //GpioDataRegs.GPCCLEAR.bit.GPIO84 = 1;
     //
     // Next two lines for debug only to halt the processor here
     // Remove after inserting ISR Code
@@ -802,23 +826,13 @@ EPWM1_INT_ISR(void)     // EPWM-1
     //
     //GpioDataRegs.GPASET.bit.GPIO15 = 1;
     //GpioDataRegs.GPATOGGLE.bit.GPIO2 = 1;
+    GpioDataRegs.GPCSET.bit.GPIO84 = 1;
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
     EALLOW;
     EPwm1Regs.ETCLR.bit.INT = 1;
     EPwm1Regs.ETCLR.bit.SOCA = 1;
     EDIS;
-
-    measMeanVal(&measMeanValStruct);
-
-    adcConvMeas.IfbU =   calVal(&calStrIfbU, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0));
-    adcConvMeas.IfbV =   calVal(&calStrIfbV, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1));
-    adcConvMeas.IfbW =   calVal(&calStrIfbW, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2));
-    adcConvMeas.IfbSum = calVal(&calStrIfbSum, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3));
-
-    adcConvMeas.VfbU =  calVal(&calStrVfbU, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4));
-    adcConvMeas.VfbV =  calVal(&calStrVfbV, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5));
-    adcConvMeas.VfbW =  calVal(&calStrVfbW, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6));
-    adcConvMeas.VfbDC = calVal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
+    GpioDataRegs.GPCCLEAR.bit.GPIO84 = 1;
 
     //GpioDataRegs.GPASET.bit.GPIO15 = 1;
     //

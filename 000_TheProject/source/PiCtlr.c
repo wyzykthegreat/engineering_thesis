@@ -34,7 +34,7 @@ float calcPiCtl(struct PI_CONTROLLER_STRUCT *data, float realValue, float setVal
     data->diffVal = data->setVal-data->realVal;
 
     data->kpOut = data->diffVal * data->kp;
-    data->kiOut = data->itg * data->ki;
+    data->kiOut = data->itg;
     data->sumOut = data->kiOut + data->kpOut;
 
     if(data->satHi < data->sumOut){
@@ -48,7 +48,7 @@ float calcPiCtl(struct PI_CONTROLLER_STRUCT *data, float realValue, float setVal
         data->kiStop = 0;
     }
     if(0 == data->kiStop){
-        data->itg += data->diffVal * data->ts;
+        data->itg += data->diffVal * data->ts * data->ki;
     }
     return data->output;
 }

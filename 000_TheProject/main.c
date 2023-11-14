@@ -12,9 +12,11 @@ float aTodq = 0.3, bTodq = 0.7, cTodq = -0.4, dToabc = 0.4, qToabc = 0.7, ang = 
 
 int main(void)
 {
-    uPwmDuty = 100;
-    vPwmDuty = 100;
-    wPwmDuty = 100;
+    uPwmDuty = 0;
+    vPwmDuty = 0;
+    wPwmDuty = 0;
+
+    iUSet = 0;
     InitSysCtrl();
     InitGpio();
     InitCpuTimers();
@@ -34,7 +36,7 @@ int main(void)
     adcConvMeasStructInit(&adcConvMeas);
 
     valCalStructInit(&calStrIfbU, 0.7, -0.05);
-    valCalStructInit(&calStrIfbV, 0.7, 0);
+    valCalStructInit(&calStrIfbV, 0.7, 0.09);
     valCalStructInit(&calStrIfbW, 0.7, -0.09);
     valCalStructInit(&calStrIfbSum, 1, 0);
     valCalStructInit(&calStrVfbU, 1, 0);
@@ -44,7 +46,8 @@ int main(void)
 
     meanValMeasStructInit(&measMeanValStruct);
 
-    //initPiCtlrStruct(&piCtlrTest, 1, 0, 0.0001, -1, 1);
+    //initPiCtlrStruct(&piCtlrTestV, 0, 1, 0.0001, 0.0, 50);
+    initPiCtlrStruct(&piCtlrTestI, 0, 1, 0.0001, -5.0, 5.0);
 
     abcdqStructInit(&abcdqTest1);
     abcdqStructInit(&abcdqTest2);

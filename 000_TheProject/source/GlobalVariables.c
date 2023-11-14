@@ -17,6 +17,9 @@ float uPwmDuty;
 float vPwmDuty;
 float wPwmDuty;
 
+float iUSet;
+float vUSet;
+
 struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataV;
@@ -33,7 +36,8 @@ struct VALUE_CALIBRATION_STRUCT calStrVfbDC;
 struct MEAN_VALUE_MEASUREMENT_STRUCT measMeanValStruct;
 
 
-struct PI_CONTROLLER_STRUCT piCtlrTest;
+struct PI_CONTROLLER_STRUCT piCtlrTestV;
+struct PI_CONTROLLER_STRUCT piCtlrTestI;
 
 struct ABCDQ_STRUCT abcdqTest1;
 struct ABCDQ_STRUCT abcdqTest2;

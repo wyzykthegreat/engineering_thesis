@@ -18,6 +18,9 @@ extern float uPwmDuty;
 extern float vPwmDuty;
 extern float wPwmDuty;
 
+extern float iUSet;
+extern float vUSet;
+
 extern struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 extern struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
 extern struct ADC_CONVERSION_DATA_STRUCT adcConvDataV;
@@ -33,7 +36,8 @@ extern struct VALUE_CALIBRATION_STRUCT calStrVfbDC;
 
 extern struct MEAN_VALUE_MEASUREMENT_STRUCT measMeanValStruct;
 
-extern struct PI_CONTROLLER_STRUCT piCtlrTest;
+extern struct PI_CONTROLLER_STRUCT piCtlrTestV;
+extern struct PI_CONTROLLER_STRUCT piCtlrTestI;
 
 extern struct ABCDQ_STRUCT abcdqTest1;
 extern struct ABCDQ_STRUCT abcdqTest2;
