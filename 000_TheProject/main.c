@@ -4,6 +4,9 @@
 #include "PiCtlr.h"
 #include "calibrateValue.h"
 #include "abcDqConv.h"
+#include "posSpdCalculate.h"
+
+
 /**
  * main.c
  */
@@ -22,9 +25,10 @@ int main(void)
     InitCpuTimers();
     InitAdc();
     InitEPwm();
+    InitEQep();
     InitPieVectTable();
     InitPieCtrl();
-    IER = 0x0000 | M_INT14 | M_INT1 | M_INT3;
+    IER = 0x0000 | M_INT14 | M_INT1 | M_INT3 | M_INT5;
     IFR = 0x0000;
     EnableInterrupts();
     ERTM;
@@ -46,16 +50,16 @@ int main(void)
 
     meanValMeasStructInit(&measMeanValStruct);
 
-    //initPiCtlrStruct(&piCtlrTestV, 0, 1, 0.0001, 0.0, 50);
     initPiCtlrStruct(&piCtlrTestI, 0, 1, 0.0001, -5.0, 5.0);
 
     abcdqStructInit(&abcdqTest1);
     abcdqStructInit(&abcdqTest2);
 
+    posSpdCalcStructInit(&posSpdTest, &EQep1Regs.QPOSCNT, 4, 10000);
 
     for(;;){
-        abcToDq(&abcdqTest1, aTodq, bTodq, cTodq, ang);
-        dqToAbc(&abcdqTest2, dToabc, qToabc, ang);
+/*        abcToDq(&abcdqTest1, aTodq, bTodq, cTodq, ang);
+        dqToAbc(&abcdqTest2, dToabc, qToabc, ang);*/
     }
 	return 0;
 }

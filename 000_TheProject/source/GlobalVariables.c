@@ -8,7 +8,7 @@
 #include "PiCtlrStructs.h"
 #include "calibrateValueStructs.h"
 #include "abcDqConvStructs.h"
-
+#include "posSpdCalculateStructs.h"
 
 unsigned int tmr2IsrCtr;
 unsigned int testCtr;
@@ -41,3 +41,5 @@ struct PI_CONTROLLER_STRUCT piCtlrTestI;
 
 struct ABCDQ_STRUCT abcdqTest1;
 struct ABCDQ_STRUCT abcdqTest2;
+
+struct POS_SPD_CALC_STRUCT posSpdTest;

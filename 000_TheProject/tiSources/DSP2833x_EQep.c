@@ -57,6 +57,26 @@ InitEQep(void)
     //
     // Initialize eQEP1/2
     //
+    InitEQep1Gpio();
+
+
+    EQep1Regs.QUPRD=1500000;  // Unit Timer for 100Hz at 150 MHz SYSCLKOUT
+    EQep1Regs.QDECCTL.bit.QSRC=00;      // QEP quadrature count mode
+    EQep1Regs.QEPCTL.bit.FREE_SOFT=2;
+    //
+    // PCRM=00 mode - QPOSCNT reset on index event
+    //
+    EQep1Regs.QEPCTL.bit.PCRM=00;
+
+    EQep1Regs.QEPCTL.bit.UTE=1;         // Unit Timeout Enable
+    EQep1Regs.QEPCTL.bit.QCLM=1;        // Latch on unit time out
+    EQep1Regs.QPOSMAX=9999;
+    EQep1Regs.QEPCTL.bit.QPEN=1;        // QEP enable
+    EQep1Regs.QCAPCTL.bit.UPPS=5;       // 1/32 for unit position
+    EQep1Regs.QCAPCTL.bit.CCPS=7;       // 1/128 for CAP clock
+    EQep1Regs.QCAPCTL.bit.CEN=1;        // QEP Capture Enable
+
+    EQep1Regs.QEINT.bit.IEL = 1;
 }
 
 //
@@ -81,7 +101,7 @@ InitEQepGpio()
     InitEQep1Gpio();
 #endif  // endif DSP28_EQEP1
 #if DSP28_EQEP2
-    InitEQep2Gpio();
+    //InitEQep2Gpio();
 #endif // endif DSP28_EQEP2
 }
 
@@ -115,7 +135,7 @@ InitEQep1Gpio(void)
     //
     GpioCtrlRegs.GPAQSEL2.bit.GPIO20 = 0;  // Sync to SYSCLKOUT GPIO20 (EQEP1A)
     GpioCtrlRegs.GPAQSEL2.bit.GPIO21 = 0;  // Sync to SYSCLKOUT GPIO21 (EQEP1B)
-    GpioCtrlRegs.GPAQSEL2.bit.GPIO22 = 0;  // Sync to SYSCLKOUT GPIO22 (EQEP1S)
+    //GpioCtrlRegs.GPAQSEL2.bit.GPIO22 = 0;  // Sync to SYSCLKOUT GPIO22 (EQEP1S)
     GpioCtrlRegs.GPAQSEL2.bit.GPIO23 = 0;  // Sync to SYSCLKOUT GPIO23 (EQEP1I)
 
     //GpioCtrlRegs.GPBQSEL2.bit.GPIO50 = 0;  //Sync to SYSCLKOUT GPIO50(EQEP1A)
@@ -130,7 +150,7 @@ InitEQep1Gpio(void)
     //
     GpioCtrlRegs.GPAMUX2.bit.GPIO20 = 1;   // Configure GPIO20 as EQEP1A
     GpioCtrlRegs.GPAMUX2.bit.GPIO21 = 1;   // Configure GPIO21 as EQEP1B
-    GpioCtrlRegs.GPAMUX2.bit.GPIO22 = 1;   // Configure GPIO22 as EQEP1S
+    //GpioCtrlRegs.GPAMUX2.bit.GPIO22 = 1;   // Configure GPIO22 as EQEP1S
     GpioCtrlRegs.GPAMUX2.bit.GPIO23 = 1;   // Configure GPIO23 as EQEP1I
 
     //GpioCtrlRegs.GPBMUX2.bit.GPIO50 = 1;   // Configure GPIO50 as EQEP1A

@@ -8,8 +8,10 @@
 #ifndef HEADER_GLOBALVARIABLES_H_
 #define HEADER_GLOBALVARIABLES_H_
 
-#include "adcConversionStructs.h"
-#include "calibrateValueStructs.h"
+#include "adcConversion.h"
+#include "calibrateValue.h"
+#include "PiCtlr.h"
+#include "posSpdCalculate.h"
 
 extern unsigned int   tmr2IsrCtr;
 extern unsigned int   testCtr;
@@ -41,4 +43,6 @@ extern struct PI_CONTROLLER_STRUCT piCtlrTestI;
 
 extern struct ABCDQ_STRUCT abcdqTest1;
 extern struct ABCDQ_STRUCT abcdqTest2;
+
+extern struct POS_SPD_CALC_STRUCT posSpdTest;
 #endif /* HEADER_GLOBALVARIABLES_H_ */

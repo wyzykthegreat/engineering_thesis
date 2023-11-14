@@ -58,9 +58,7 @@
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 #include "GlobalVariables.h"
-#include "adcConversion.h"
-#include "calibrateValue.h"
-#include "PiCtlr.h"
+
 //
 // INT13_ISR - Connected to INT13 of CPU (use MINT13 mask):
 // Note CPU-Timer1 is reserved for TI use, however XINT13
@@ -106,7 +104,7 @@ INT14_ISR(void)     // CPU-Timer2
     //LED flashing for test purposes
         //GpioDataRegs.GPCTOGGLE.bit.GPIO84 = 1;
         GpioDataRegs.GPCTOGGLE.bit.GPIO86 = 1;
-
+        posCalc(&posSpdTest);
     }
     //
     //Do 100ms task
@@ -1146,6 +1144,8 @@ EQEP1_INT_ISR(void)    // EQEP-1
     //
     // Insert ISR Code here
     //
+    EQep1Regs.QCLR.bit.IEL = 1;
+    posZero(&posSpdTest);
 
     //
     // To receive more interrupts from this PIE group, acknowledge this 
@@ -1157,8 +1157,8 @@ EQEP1_INT_ISR(void)    // EQEP-1
     // Next two lines for debug only to halt the processor here
     // Remove after inserting ISR Code
     //
-    asm ("      ESTOP0");
-    for(;;);
+//    asm ("      ESTOP0");
+//    for(;;);
 }
 
 //
