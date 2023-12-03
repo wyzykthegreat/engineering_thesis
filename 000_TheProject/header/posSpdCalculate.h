@@ -10,8 +10,10 @@
 
 #include "posSpdCalculateStructs.h"
 
-void posSpdCalcStructInit(struct POS_SPD_CALC_STRUCT *data, unsigned int* encVal, unsigned int polePairs, unsigned int rsln);
-void posCalc(struct POS_SPD_CALC_STRUCT *data);
-void posZero(struct POS_SPD_CALC_STRUCT *data);
+void posCalcStructInit(struct POS_CALC_STRUCT *data, unsigned int* encVal, unsigned int polePairs, unsigned int rsln);
+void spdCalcStructInit(struct SPD_CALC_STRUCT *data, unsigned int tmrPrscCcps, unsigned int encPrscUpps, unsigned int* stsFlgReg, unsigned int dirChgFlgMsk, unsigned int cntOvfFlgMsk, unsigned int dirFlgMsk, unsigned int* cntPrd, unsigned int rotRsln, unsigned long* qposlat, unsigned int quprd);
+void posCalc(struct POS_CALC_STRUCT *data);
+void posZero(struct POS_CALC_STRUCT *data);
+void spdCalc(struct SPD_CALC_STRUCT *data);
 
 #endif /* HEADER_POSSPDCALCULATE_H_ */

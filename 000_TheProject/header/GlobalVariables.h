@@ -12,6 +12,7 @@
 #include "calibrateValue.h"
 #include "PiCtlr.h"
 #include "posSpdCalculate.h"
+#include "abcDqConv.h"
 
 extern unsigned int   tmr2IsrCtr;
 extern unsigned int   testCtr;
@@ -44,5 +45,7 @@ extern struct PI_CONTROLLER_STRUCT piCtlrTestI;
 extern struct ABCDQ_STRUCT abcdqTest1;
 extern struct ABCDQ_STRUCT abcdqTest2;
 
-extern struct POS_SPD_CALC_STRUCT posSpdTest;
+extern struct POS_CALC_STRUCT posCalcStruct;
+extern struct SPD_CALC_STRUCT spdCalcStruct;
+
 #endif /* HEADER_GLOBALVARIABLES_H_ */

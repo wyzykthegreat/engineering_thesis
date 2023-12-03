@@ -42,4 +42,5 @@ struct PI_CONTROLLER_STRUCT piCtlrTestI;
 struct ABCDQ_STRUCT abcdqTest1;
 struct ABCDQ_STRUCT abcdqTest2;
 
-struct POS_SPD_CALC_STRUCT posSpdTest;
+struct POS_CALC_STRUCT posCalcStruct;
+struct SPD_CALC_STRUCT spdCalcStruct;

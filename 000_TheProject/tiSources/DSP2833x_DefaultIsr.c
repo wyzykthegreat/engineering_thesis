@@ -104,7 +104,9 @@ INT14_ISR(void)     // CPU-Timer2
     //LED flashing for test purposes
         //GpioDataRegs.GPCTOGGLE.bit.GPIO84 = 1;
         GpioDataRegs.GPCTOGGLE.bit.GPIO86 = 1;
-        posCalc(&posSpdTest);
+        posCalc(&posCalcStruct);
+        spdCalc(&spdCalcStruct);
+        dqToAbc(&abcdqTest2, 0, 1, posCalcStruct.eTheta);
     }
     //
     //Do 100ms task
@@ -1145,7 +1147,7 @@ EQEP1_INT_ISR(void)    // EQEP-1
     // Insert ISR Code here
     //
     EQep1Regs.QCLR.bit.IEL = 1;
-    posZero(&posSpdTest);
+    posZero(&posCalcStruct);
 
     //
     // To receive more interrupts from this PIE group, acknowledge this 

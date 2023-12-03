@@ -55,8 +55,8 @@ int main(void)
     abcdqStructInit(&abcdqTest1);
     abcdqStructInit(&abcdqTest2);
 
-    posSpdCalcStructInit(&posSpdTest, &EQep1Regs.QPOSCNT, 4, 10000);
-
+    posCalcStructInit(&posCalcStruct,(unsigned int*) &EQep1Regs.QPOSCNT, 4, 10000);
+    spdCalcStructInit(&spdCalcStruct, EQep1Regs.QCAPCTL.bit.CCPS, EQep1Regs.QCAPCTL.bit.UPPS, &EQep1Regs.QEPSTS.all, 0x2, 0x4, 0x10, &EQep1Regs.QCPRDLAT, 10000, &EQep1Regs.QPOSLAT, EQep1Regs.QUPRD);
     for(;;){
 /*        abcToDq(&abcdqTest1, aTodq, bTodq, cTodq, ang);
         dqToAbc(&abcdqTest2, dToabc, qToabc, ang);*/

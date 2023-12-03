@@ -72,7 +72,7 @@ InitEQep(void)
     EQep1Regs.QEPCTL.bit.QCLM=1;        // Latch on unit time out
     EQep1Regs.QPOSMAX=9999;
     EQep1Regs.QEPCTL.bit.QPEN=1;        // QEP enable
-    EQep1Regs.QCAPCTL.bit.UPPS=5;       // 1/32 for unit position
+    EQep1Regs.QCAPCTL.bit.UPPS=0;       // 1/1//32 for unit position
     EQep1Regs.QCAPCTL.bit.CCPS=7;       // 1/128 for CAP clock
     EQep1Regs.QCAPCTL.bit.CEN=1;        // QEP Capture Enable
 
