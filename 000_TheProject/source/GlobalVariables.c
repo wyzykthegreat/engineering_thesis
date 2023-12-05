@@ -16,9 +16,11 @@ unsigned int testCtr;
 float uPwmDuty;
 float vPwmDuty;
 float wPwmDuty;
+float dPwmDuty;
+float qPwmDuty;
 
-float iUSet;
-float vUSet;
+float idSet;
+float iqSet;
 
 struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
@@ -36,11 +38,11 @@ struct VALUE_CALIBRATION_STRUCT calStrVfbDC;
 struct MEAN_VALUE_MEASUREMENT_STRUCT measMeanValStruct;
 
 
-struct PI_CONTROLLER_STRUCT piCtlrTestV;
-struct PI_CONTROLLER_STRUCT piCtlrTestI;
+struct PI_CONTROLLER_STRUCT piCtlrId;
+struct PI_CONTROLLER_STRUCT piCtlrIq;
 
-struct ABCDQ_STRUCT abcdqTest1;
-struct ABCDQ_STRUCT abcdqTest2;
+struct ABCDQ_STRUCT dqToAbcStruct;
+struct ABCDQ_STRUCT abcToDqStruct;
 
 struct POS_CALC_STRUCT posCalcStruct;
 struct SPD_CALC_STRUCT spdCalcStruct;

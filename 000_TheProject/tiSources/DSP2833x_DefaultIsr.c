@@ -104,9 +104,9 @@ INT14_ISR(void)     // CPU-Timer2
     //LED flashing for test purposes
         //GpioDataRegs.GPCTOGGLE.bit.GPIO84 = 1;
         GpioDataRegs.GPCTOGGLE.bit.GPIO86 = 1;
-        posCalc(&posCalcStruct);
+        //posCalc(&posCalcStruct);
         spdCalc(&spdCalcStruct);
-        dqToAbc(&abcdqTest2, 0, 1, posCalcStruct.eTheta);
+        //dqToAbc(&abcdqTest2, 0, 1, posCalcStruct.eTheta);
     }
     //
     //Do 100ms task
@@ -468,25 +468,45 @@ SEQ1INT_ISR(void)   //SEQ1 ADC
     AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
 
     measMeanVal(&measMeanValStruct);
-
     adcConvMeas.IfbU =   calVal(&calStrIfbU, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0));
     adcConvMeas.IfbV =   calVal(&calStrIfbV, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1));
-    //adcConvMeas.IfbW =   calVal(&calStrIfbW, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2));
+    adcConvMeas.IfbW =   calVal(&calStrIfbW, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2));
+    posCalc(&posCalcStruct);
+    abcToDq(&abcToDqStruct, adcConvMeas.IfbU, adcConvMeas.IfbV, adcConvMeas.IfbW, posCalcStruct.eTheta);
     //adcConvMeas.IfbSum = calVal(&calStrIfbSum, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3));
 
-    adcConvMeas.VfbU =  calVal(&calStrVfbU, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4));
-    adcConvMeas.VfbV =  calVal(&calStrVfbV, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5));
+    //adcConvMeas.VfbU =  calVal(&calStrVfbU, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4));
+    //adcConvMeas.VfbV =  calVal(&calStrVfbV, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5));
     //adcConvMeas.VfbW =  calVal(&calStrVfbW, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6));
     adcConvMeas.VfbDC = calVal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
-    uPwmDuty = (calcPiCtl(&piCtlrTestI, -adcConvMeas.IfbV, iUSet)+5.0)*10;
+    dPwmDuty = (calcPiCtl(&piCtlrId, abcToDqStruct.d, idSet)+5.0)*10;
+    qPwmDuty = (calcPiCtl(&piCtlrIq, abcToDqStruct.q, iqSet)+5.0)*10;
 
+    posCalc(&posCalcStruct);
+    dqToAbc(&dqToAbcStruct, dPwmDuty, qPwmDuty, posCalcStruct.eTheta);
+
+    uPwmDuty = (dqToAbcStruct.a+100)/2;
+    vPwmDuty = (dqToAbcStruct.b+100)/2;
+    wPwmDuty = (dqToAbcStruct.c+100)/2;
     if(50 < uPwmDuty){
         uPwmDuty = 50;
     } else if (0 > uPwmDuty){
         uPwmDuty = 0;
     }
+    if(50 < vPwmDuty){
+        vPwmDuty = 50;
+    } else if (0 > vPwmDuty){
+        vPwmDuty = 0;
+    }
+    if(50 < wPwmDuty){
+        wPwmDuty = 50;
+    } else if (0 > wPwmDuty){
+        wPwmDuty = 0;
+    }
     EALLOW;
     EPwm1Regs.CMPA.half.CMPA = (100-uPwmDuty)*75;
+    EPwm2Regs.CMPA.half.CMPA = (100-vPwmDuty)*75;
+    EPwm3Regs.CMPA.half.CMPA = (100-wPwmDuty)*75;
     EDIS;
     //
     // To receive more interrupts from this PIE group, acknowledge this 

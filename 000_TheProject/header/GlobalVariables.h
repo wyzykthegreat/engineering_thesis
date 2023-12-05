@@ -20,9 +20,11 @@ extern unsigned int   testCtr;
 extern float uPwmDuty;
 extern float vPwmDuty;
 extern float wPwmDuty;
+extern float dPwmDuty;
+extern float qPwmDuty;
 
-extern float iUSet;
-extern float vUSet;
+extern float idSet;
+extern float iqSet;
 
 extern struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 extern struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
@@ -39,11 +41,11 @@ extern struct VALUE_CALIBRATION_STRUCT calStrVfbDC;
 
 extern struct MEAN_VALUE_MEASUREMENT_STRUCT measMeanValStruct;
 
-extern struct PI_CONTROLLER_STRUCT piCtlrTestV;
-extern struct PI_CONTROLLER_STRUCT piCtlrTestI;
+extern struct PI_CONTROLLER_STRUCT piCtlrId;
+extern struct PI_CONTROLLER_STRUCT piCtlrIq;
 
-extern struct ABCDQ_STRUCT abcdqTest1;
-extern struct ABCDQ_STRUCT abcdqTest2;
+extern struct ABCDQ_STRUCT dqToAbcStruct;
+extern struct ABCDQ_STRUCT abcToDqStruct;
 
 extern struct POS_CALC_STRUCT posCalcStruct;
 extern struct SPD_CALC_STRUCT spdCalcStruct;

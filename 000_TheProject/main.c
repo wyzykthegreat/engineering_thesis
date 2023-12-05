@@ -18,8 +18,11 @@ int main(void)
     uPwmDuty = 0;
     vPwmDuty = 0;
     wPwmDuty = 0;
+    dPwmDuty = 0;
+    qPwmDuty = 0;
 
-    iUSet = 0;
+    idSet = 0;
+    iqSet = 0;
     InitSysCtrl();
     InitGpio();
     InitCpuTimers();
@@ -50,10 +53,11 @@ int main(void)
 
     meanValMeasStructInit(&measMeanValStruct);
 
-    initPiCtlrStruct(&piCtlrTestI, 0, 1, 0.0001, -5.0, 5.0);
+    initPiCtlrStruct(&piCtlrId, 0, 1, 0.0001, -5.0, 5.0);
+    initPiCtlrStruct(&piCtlrIq, 0, 1, 0.0001, -5.0, 5.0);
 
-    abcdqStructInit(&abcdqTest1);
-    abcdqStructInit(&abcdqTest2);
+    abcdqStructInit(&dqToAbcStruct);
+    abcdqStructInit(&abcToDqStruct);
 
     posCalcStructInit(&posCalcStruct,(unsigned int*) &EQep1Regs.QPOSCNT, 4, 10000);
     spdCalcStructInit(&spdCalcStruct, EQep1Regs.QCAPCTL.bit.CCPS, EQep1Regs.QCAPCTL.bit.UPPS, &EQep1Regs.QEPSTS.all, 0x2, 0x4, 0x10, &EQep1Regs.QCPRDLAT, 10000, &EQep1Regs.QPOSLAT, EQep1Regs.QUPRD);
