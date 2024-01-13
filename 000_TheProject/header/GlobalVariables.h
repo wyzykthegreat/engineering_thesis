@@ -22,9 +22,17 @@ extern float vPwmDuty;
 extern float wPwmDuty;
 extern float dPwmDuty;
 extern float qPwmDuty;
+extern float angVar;
+extern float uVar;
+extern float vVar;
+extern float wVar;
+extern float gainTest;
+extern int findZero;
+extern unsigned int atfclAng;
 
 extern float idSet;
 extern float iqSet;
+extern float spdSet;
 
 extern struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 extern struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
@@ -43,6 +51,7 @@ extern struct MEAN_VALUE_MEASUREMENT_STRUCT measMeanValStruct;
 
 extern struct PI_CONTROLLER_STRUCT piCtlrId;
 extern struct PI_CONTROLLER_STRUCT piCtlrIq;
+extern struct PI_CONTROLLER_STRUCT piCtlrSpd;
 
 extern struct ABCDQ_STRUCT dqToAbcStruct;
 extern struct ABCDQ_STRUCT abcToDqStruct;

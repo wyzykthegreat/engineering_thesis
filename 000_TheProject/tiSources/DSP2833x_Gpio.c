@@ -74,9 +74,9 @@ InitGpio(void)
     GpioCtrlRegs.GPCMUX1.all = 0x00000000;     // GPIO functionality GPIO64-GPIO79
     GpioCtrlRegs.GPCMUX2.all = 0x00000000;     // GPIO functionality GPIO80-GPIO95
 
-    GpioCtrlRegs.GPADIR.all = 0x013F;      // GPIO6-GPIO31 are inputs except gpio15
-    GpioCtrlRegs.GPBDIR.all = 0x0000;      // GPIO32-GPIO63 are inputs
-    GpioCtrlRegs.GPCDIR.all = 0x00500000;      // GPI064-GPIO95 are inputs except for 84 and 86
+    GpioCtrlRegs.GPADIR.all = 0x0040013F;      // GPIO6-GPIO31 are inputs except gpio15
+    GpioCtrlRegs.GPBDIR.all = 0x00000003;      // GPIO32-GPIO63 are inputs
+    GpioCtrlRegs.GPCDIR.all = 0x00D00000;      // GPI064-GPIO95 are inputs except for 84 and 86
 
     //
     // Each input can have different qualification
@@ -92,9 +92,9 @@ InitGpio(void)
     //
     // Pull-ups can be enabled or disabled
     //
-    GpioCtrlRegs.GPAPUD.all = 0x013F;      // Pullup's enabled GPIO6-GPIO31 except GPIO15
-    GpioCtrlRegs.GPBPUD.all = 0x0000;      // Pullup's enabled GPIO32-GPIO63
-    GpioCtrlRegs.GPCPUD.all = 0x00500000;      // Pullup's enabled GPIO64-GPIO95 except for GPIO84 and GPIO86
+    GpioCtrlRegs.GPAPUD.all = 0x0040013F;      // Pullup's enabled GPIO6-GPIO31 except GPIO15
+    GpioCtrlRegs.GPBPUD.all = 0x00000003;      // Pullup's enabled GPIO32-GPIO63
+    GpioCtrlRegs.GPCPUD.all = 0x00D00000;      // Pullup's enabled GPIO64-GPIO95 except for GPIO84 and GPIO86
     //GpioCtrlRegs.GPAPUD.all = 0xFFFF;    // Pullup's disabled GPIO0-GPIO31
     //GpioCtrlRegs.GPBPUD.all = 0xFFFF;    // Pullup's disabled GPIO32-GPIO34
     //GpioCtrlRegs.GPCPUD.all = 0xFFFF;    // Pullup's disabled GPIO64-GPIO79

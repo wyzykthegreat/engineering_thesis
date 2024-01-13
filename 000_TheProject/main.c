@@ -20,18 +20,27 @@ int main(void)
     wPwmDuty = 0;
     dPwmDuty = 0;
     qPwmDuty = 0;
+    angVar = 0;
+    uVar = 0;
+    vVar = 0;
+    wVar = 0;
+    gainTest = 0;
+    findZero = 0;
+    atfclAng = 0;
 
     idSet = 0;
     iqSet = 0;
+    spdSet = 0;
     InitSysCtrl();
     InitGpio();
     InitCpuTimers();
     InitAdc();
     InitEPwm();
     InitEQep();
+    InitECana();
     InitPieVectTable();
     InitPieCtrl();
-    IER = 0x0000 | M_INT14 | M_INT1 | M_INT3 | M_INT5;
+    IER = 0x0000 | M_INT14 | M_INT1 | M_INT3 | M_INT5 | M_INT9;
     IFR = 0x0000;
     EnableInterrupts();
     ERTM;
@@ -53,8 +62,9 @@ int main(void)
 
     meanValMeasStructInit(&measMeanValStruct);
 
-    initPiCtlrStruct(&piCtlrId, 0, 1, 0.0001, -5.0, 5.0);
-    initPiCtlrStruct(&piCtlrIq, 0, 1, 0.0001, -5.0, 5.0);
+    initPiCtlrStruct(&piCtlrId, 10, 2, 0.0001, -5.0, 5.0);
+    initPiCtlrStruct(&piCtlrIq, 10, 2, 0.0001, -5.0, 5.0);
+    initPiCtlrStruct(&piCtlrSpd, 0.05, 0.025, 0.0001, -3.0, 3.0);
 
     abcdqStructInit(&dqToAbcStruct);
     abcdqStructInit(&abcToDqStruct);

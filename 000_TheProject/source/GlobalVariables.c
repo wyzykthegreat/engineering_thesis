@@ -18,9 +18,17 @@ float vPwmDuty;
 float wPwmDuty;
 float dPwmDuty;
 float qPwmDuty;
+float angVar;
+float uVar;
+float vVar;
+float wVar;
+float gainTest;
+int findZero;
+unsigned int atfclAng;
 
 float idSet;
 float iqSet;
+float spdSet;
 
 struct ADC_CONVERTED_MEASUREMENTS_STRUCT adcConvMeas;
 struct ADC_CONVERSION_DATA_STRUCT adcConvDataI;
@@ -40,6 +48,7 @@ struct MEAN_VALUE_MEASUREMENT_STRUCT measMeanValStruct;
 
 struct PI_CONTROLLER_STRUCT piCtlrId;
 struct PI_CONTROLLER_STRUCT piCtlrIq;
+struct PI_CONTROLLER_STRUCT piCtlrSpd;
 
 struct ABCDQ_STRUCT dqToAbcStruct;
 struct ABCDQ_STRUCT abcToDqStruct;

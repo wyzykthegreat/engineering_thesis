@@ -105,32 +105,14 @@ INT14_ISR(void)     // CPU-Timer2
         //GpioDataRegs.GPCTOGGLE.bit.GPIO84 = 1;
         GpioDataRegs.GPCTOGGLE.bit.GPIO86 = 1;
         //posCalc(&posCalcStruct);
-        spdCalc(&spdCalcStruct);
+
+
         //dqToAbc(&abcdqTest2, 0, 1, posCalcStruct.eTheta);
     }
     //
     //Do 100ms task
+    adcConvMeas.VfbDC = calVal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
 
-/*    if(100 < uPwmDuty){
-        uPwmDuty = 100;
-    } else if (0 > uPwmDuty){
-        uPwmDuty = 0;
-    }
-    if(100 < vPwmDuty){
-            vPwmDuty = 100;
-        } else if (0 > vPwmDuty){
-            vPwmDuty = 0;
-        }
-    if(100 < wPwmDuty){
-            wPwmDuty = 100;
-        } else if (0 > wPwmDuty){
-            wPwmDuty = 0;
-        }*/
-    EALLOW;
-    //EPwm1Regs.CMPA.half.CMPA = (100-uPwmDuty)*75;
-    //EPwm2Regs.CMPA.half.CMPA = (100-vPwmDuty)*75;
-    //EPwm3Regs.CMPA.half.CMPA = (100-wPwmDuty)*75;
-    EDIS;
     //
     //Send CAN frames
     //
@@ -467,42 +449,57 @@ SEQ1INT_ISR(void)   //SEQ1 ADC
     AdcRegs.ADCTRL2.bit.RST_SEQ1 = 1;
     AdcRegs.ADCST.bit.INT_SEQ1_CLR = 1;
 
-    measMeanVal(&measMeanValStruct);
+    switch (posCalcStruct.zeroed){
+    case 1:
+        spdCalc(&spdCalcStruct);
+        iqSet = (calcPiCtl(&piCtlrSpd, spdCalcStruct.spd, spdSet));
+    }
+    //pomiar pr¹dów i przeliczenie z abc na dq, bardziej ufam trzem niedok³adnym pomiarom ni¿ dwóm pomiarom niedok³adnym
     adcConvMeas.IfbU =   calVal(&calStrIfbU, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT0));
     adcConvMeas.IfbV =   calVal(&calStrIfbV, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT1));
     adcConvMeas.IfbW =   calVal(&calStrIfbW, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT2));
-    posCalc(&posCalcStruct);
-    abcToDq(&abcToDqStruct, adcConvMeas.IfbU, adcConvMeas.IfbV, adcConvMeas.IfbW, posCalcStruct.eTheta);
-    //adcConvMeas.IfbSum = calVal(&calStrIfbSum, adcToReal(&adcConvDataI, AdcMirror.ADCRESULT3));
+    switch (posCalcStruct.zeroed){
+    case 0:
+        if(1 == findZero){
+            abcToDq(&abcToDqStruct, adcConvMeas.IfbU, adcConvMeas.IfbV, adcConvMeas.IfbW, (atfclAng++/10000.0)*M_PI*2);
+            dPwmDuty = (calcPiCtl(&piCtlrId, abcToDqStruct.d, 1)+5.0)*7;
+            qPwmDuty = (calcPiCtl(&piCtlrIq, abcToDqStruct.q, 0)+5.0)*7;
+            dqToAbc(&dqToAbcStruct, dPwmDuty, qPwmDuty, (atfclAng/10000.0)*M_PI*2);
+        }
+        break;
+    case 1:
+        posCalc(&posCalcStruct);
+        abcToDq(&abcToDqStruct, adcConvMeas.IfbU, adcConvMeas.IfbV, adcConvMeas.IfbW, posCalcStruct.eTheta);
+        dPwmDuty = (calcPiCtl(&piCtlrId, abcToDqStruct.d, idSet))*14;
+        qPwmDuty = (calcPiCtl(&piCtlrIq, abcToDqStruct.q, iqSet))*14;
+        //obliczenie k¹ta i przejœcie z dq do abc
+        posCalc(&posCalcStruct);
+        dqToAbc(&dqToAbcStruct, dPwmDuty, qPwmDuty, posCalcStruct.eTheta);
+    }
 
-    //adcConvMeas.VfbU =  calVal(&calStrVfbU, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT4));
-    //adcConvMeas.VfbV =  calVal(&calStrVfbV, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT5));
-    //adcConvMeas.VfbW =  calVal(&calStrVfbW, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT6));
-    adcConvMeas.VfbDC = calVal(&calStrVfbDC, adcToReal(&adcConvDataV, AdcMirror.ADCRESULT7));
-    dPwmDuty = (calcPiCtl(&piCtlrId, abcToDqStruct.d, idSet)+5.0)*10;
-    qPwmDuty = (calcPiCtl(&piCtlrIq, abcToDqStruct.q, iqSet)+5.0)*10;
+    //wype³nienie abc musi byæ odpowiednio przeskalowane
+    uPwmDuty = ((dqToAbcStruct.a+100)/2);
+    vPwmDuty = ((dqToAbcStruct.b+100)/2);
+    wPwmDuty = ((dqToAbcStruct.c+100)/2);
 
-    posCalc(&posCalcStruct);
-    dqToAbc(&dqToAbcStruct, dPwmDuty, qPwmDuty, posCalcStruct.eTheta);
-
-    uPwmDuty = (dqToAbcStruct.a+100)/2;
-    vPwmDuty = (dqToAbcStruct.b+100)/2;
-    wPwmDuty = (dqToAbcStruct.c+100)/2;
-    if(50 < uPwmDuty){
-        uPwmDuty = 50;
+    //ograniczenie wype³nienia w zakresie 0-100 w przypadku niespodziewanych b³êdów
+    if(100 < uPwmDuty){
+        uPwmDuty = 100;
     } else if (0 > uPwmDuty){
         uPwmDuty = 0;
     }
-    if(50 < vPwmDuty){
-        vPwmDuty = 50;
+    if(100 < vPwmDuty){
+        vPwmDuty = 100;
     } else if (0 > vPwmDuty){
         vPwmDuty = 0;
     }
-    if(50 < wPwmDuty){
-        wPwmDuty = 50;
+    if(100 < wPwmDuty){
+        wPwmDuty = 100;
     } else if (0 > wPwmDuty){
         wPwmDuty = 0;
     }
+
+    //zmiana wype³nienia
     EALLOW;
     EPwm1Regs.CMPA.half.CMPA = (100-uPwmDuty)*75;
     EPwm2Regs.CMPA.half.CMPA = (100-vPwmDuty)*75;
@@ -520,6 +517,7 @@ SEQ1INT_ISR(void)   //SEQ1 ADC
     //
     //asm ("      ESTOP0");
     //for(;;);
+     measMeanVal(&measMeanValStruct);
 }
 
 //
@@ -1166,9 +1164,16 @@ EQEP1_INT_ISR(void)    // EQEP-1
     //
     // Insert ISR Code here
     //
+
+
+    //if (1 == EQep1Regs.QFLG.bit.IEL){
     EQep1Regs.QCLR.bit.IEL = 1;
     posZero(&posCalcStruct);
-
+    rstPiCtlr(&piCtlrId);
+    rstPiCtlr(&piCtlrIq);
+    posCalc(&posCalcStruct);
+    findZero = 0;
+    //}
     //
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
@@ -1797,14 +1802,18 @@ ECAN1INTA_ISR(void)  // eCAN-A
     // To receive more interrupts from this PIE group, acknowledge this 
     // interrupt
     //
-    // PieCtrlRegs.PIEACK.all = PIEACK_GROUP9;
-
+    ECanaRegs.CANRMP.bit.RMP0 = 1;
+    PieCtrlRegs.PIEACK.all = PIEACK_GROUP9;
+    spdSet = ECanaMboxes.MBOX0.MDH.all;
+    if(ECanaMboxes.MBOX0.MDL.all){
+        spdSet=spdSet*-1;
+    }
     //
     // Next two lines for debug only to halt the processor here
     // Remove after inserting ISR Code
     //
-    asm ("      ESTOP0");
-    for(;;);
+//    asm ("      ESTOP0");
+//    for(;;);
 }
 
 //

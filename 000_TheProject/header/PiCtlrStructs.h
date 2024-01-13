@@ -26,6 +26,7 @@ struct PI_CONTROLLER_STRUCT{
     float ts;
     float satHi;
     float satLo;
+    int mns;
 
 
 

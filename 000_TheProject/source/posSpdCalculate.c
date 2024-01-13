@@ -25,8 +25,8 @@ void posZero(struct POS_CALC_STRUCT *data){
 }
 
 void posCalc(struct POS_CALC_STRUCT *data){
-    data->mTheta = (float)*data->encVal/(float)data->rotRsln*M_PI*2;
-    data->eTheta = (float)*data->encVal/(float)data->rotRsln*M_PI*8;
+    data->mTheta = (float)((*data->encVal+272)/(float)data->rotRsln)*M_PI*2;
+    data->eTheta = (float)((*data->encVal+272)/(float)data->rotRsln)*M_PI*8;
     while(M_PI*2 < data->eTheta){
         data->eTheta -=M_PI*2;
     }
@@ -50,7 +50,7 @@ void spdCalcStructInit(struct SPD_CALC_STRUCT *data, unsigned int tmrPrscCcps, u
 void spdCalc(struct SPD_CALC_STRUCT *data){
     //data->spd = (data->encPrscUpps/data->rotRsln)/(float)((*data->cntPrd*data->tmrPrscCcps)/(9000000000.0));//150Mhz*60 to have unit per minute
     switch ((*data->stsFlgReg&data->cntOvfFlgMsk)){
-        case 0:
+        case 4:
             switch ((*data->stsFlgReg&data->dirChgFlgMsk)){
             case 0:
                 data->spd = (data->encPrscUpps/data->rotRsln)/(float)((*data->cntPrd*data->tmrPrscCcps)/(9000000000.0));//150Mhz*60 to have unit per minute
@@ -61,8 +61,11 @@ void spdCalc(struct SPD_CALC_STRUCT *data){
             }
             break;
         default:
-            data->spd = (*data->qposlat/data->rotRsln)/((150000000/data->quprd)*60);
-            *data->stsFlgReg |= data->cntOvfFlgMsk;
+            data->spd = 900000.0/(*data->cntPrd*data->tmrPrscCcps);//(*data->qposlat/data->rotRsln)/((150000000.0/data->quprd)*60.0);
+            if(0 == (*data->stsFlgReg&data->dirFlgMsk)){
+                data->spd = data->spd*-1;
+            }
+            //*data->stsFlgReg |= data->cntOvfFlgMsk;
 
     }
 

@@ -48,6 +48,8 @@
 #include "DSP2833x_Device.h"     // DSP2833x Headerfile Include File
 #include "DSP2833x_Examples.h"   // DSP2833x Examples Include File
 
+struct ECAN_REGS MyECanaShadow;
+void InitMBox(void);
 //
 // InitECan - This function initializes the eCAN module to a known state.
 //
@@ -206,8 +208,11 @@ InitECana(void)
     // Disable all Mailboxes
     //
     ECanaRegs.CANME.all = 0;		// Required before writing the MSGIDs
-
     EDIS;
+
+    InitMBox();
+
+    InitECanaGpio();
 }
 
 #if (DSP28_ECANB)
@@ -532,5 +537,38 @@ void cfgECanaMB(void){
     ECanaMboxes.MBOX30.MSGCTRL.all = 0x00000000;
     ECanaMboxes.MBOX31.MSGCTRL.all = 0x00000000;
 */
+
+}
+
+void InitMBox(void){
+    EALLOW;
+    MyECanaShadow.CANMD.all = ECanaRegs.CANMD.all;
+    MyECanaShadow.CANMD.bit.MD0 = 1;
+    ECanaRegs.CANMD.all = MyECanaShadow.CANMD.all;
+
+    MyECanaShadow.CANME.all = ECanaRegs.CANME.all;
+    MyECanaShadow.CANME.bit.ME0 = 1;
+    ECanaRegs.CANME.all = MyECanaShadow.CANME.all;
+
+    MyECanaShadow.CANMIL.all = ECanaRegs.CANMIL.all;
+    MyECanaShadow.CANMIL.bit.MIL0 = 1;
+    ECanaRegs.CANMIL.all = MyECanaShadow.CANMIL.all;
+
+    MyECanaShadow.CANMIM.all = ECanaRegs.CANMIM.all;
+    MyECanaShadow.CANMIM.bit.MIM0 = 1;
+    ECanaRegs.CANMIM.all = MyECanaShadow.CANMIM.all;
+
+    MyECanaShadow.CANGIM.all = ECanaRegs.CANGIM.all;
+    MyECanaShadow.CANGIM.bit.AAIM = 1;
+    MyECanaShadow.CANGIM.bit.WDIM = 1;
+    MyECanaShadow.CANGIM.bit.WUIM = 1;
+    MyECanaShadow.CANGIM.bit.BOIM = 1;
+    MyECanaShadow.CANGIM.bit.EPIM = 1;
+    MyECanaShadow.CANGIM.bit.WLIM = 1;
+    MyECanaShadow.CANGIM.bit.GIL = 0;
+    MyECanaShadow.CANGIM.bit.I1EN = 1;
+    MyECanaShadow.CANGIM.bit.I0EN = 1;
+    ECanaRegs.CANGIM.all = MyECanaShadow.CANGIM.all;
+    EDIS;
 
 }

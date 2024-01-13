@@ -19,6 +19,7 @@ void initPiCtlrStruct(struct PI_CONTROLLER_STRUCT *data, float ki, float kp, flo
     data->kpOut = 0;
     data->sumOut = 0;
     data->kiStop = 0;
+    data->mns = 0;
 
     data->ki = ki;
     data->kp = kp;
@@ -36,11 +37,15 @@ float calcPiCtl(struct PI_CONTROLLER_STRUCT *data, float realValue, float setVal
     data->kpOut = data->diffVal * data->kp;
     data->kiOut = data->itg;
     data->sumOut = data->kiOut + data->kpOut;
-
-    if(data->satHi < data->sumOut){
+    if(0 > data->sumOut){
+        data->mns = 1;
+    } else {
+        data->mns = 0;
+    }
+    if((data->satHi < data->sumOut)&&(0 == data->mns)){
         data->output = data->satHi;
         data->kiStop = 1;
-    } else if (data->satLo > data->sumOut) {
+    } else if ((data->satLo > data->sumOut)&&(1 == data->mns)) {
         data->output = data->satLo;
         data->kiStop = 1;
     } else {
@@ -53,4 +58,14 @@ float calcPiCtl(struct PI_CONTROLLER_STRUCT *data, float realValue, float setVal
     return data->output;
 }
 
+void rstPiCtlr(struct PI_CONTROLLER_STRUCT *data){
+    data->setVal = 0;
+    data->output = 0;
 
+    data->itg = 0;
+    data->kiOut = 0;
+    data->kpOut = 0;
+    data->sumOut = 0;
+    data->kiStop = 0;
+    data->mns = 0;
+}

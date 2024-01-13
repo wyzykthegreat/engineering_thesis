@@ -33,6 +33,6 @@ struct SPD_CALC_STRUCT{
     float quprd;
     float rotRsln;
 
-    unsigned int spd;
+    float spd;
 };
 #endif /* HEADER_POSSPDCALCULATESTRUCTS_H_ */
