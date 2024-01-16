@@ -6,5 +6,6 @@ authors:
 title: "PMSM motor control system using CAN network"
 version: 1.0.0
 identifiers:
+url: "https://github.com/github-linguist/linguist"
 
 date-released: 2024-01-16
